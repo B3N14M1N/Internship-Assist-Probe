@@ -1,36 +1,26 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class LevelInitializator : MonoBehaviour
 {
-    private LevelResourcePath levelResourcePath;
+    [Inject]
+    public LevelManager levelManager;
+
     private LevelModel levelModel;
     public void Awake()
     {
-        levelResourcePath = LevelManager.Instance.GetLevelResourcePath();
-        GetLevelModelFromPath(levelResourcePath.path);
+        levelModel = levelManager.GetLevelModel();
+        if (levelModel != null)
+        {
+            InitializeScene();
+        }
     }
 
-    public void GetLevelModelFromPath(string path)
-    {
-        // read from JSON
-    }
     public void InitializeScene()
     {
-        levelModel.DebugLog();
+        Debug.Log($"Level: {levelModel.level}");
     }
 
-}
-
-[Serializable]
-public class LevelModel
-{
-    public int level;
-    [SerializeField]
-    public float LevelTime;
-
-    public void DebugLog()
-    {
-        Debug.Log($"Level:{level}\nLevelTime:{LevelTime}");
-    }
 }

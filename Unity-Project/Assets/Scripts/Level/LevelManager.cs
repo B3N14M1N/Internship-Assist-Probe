@@ -1,58 +1,51 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Zenject;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager
 {
     private int currentLevel;
-    private string ScriptableObjectsFolderPath = "LevelPaths";
+    private string levelPaths;
+    private string progressPath;
 
-    private Dictionary<int, LevelResourcePath> kvp = new Dictionary<int, LevelResourcePath>();
+    private Dictionary<int, LevelResourcePathScriptableObject> kvp = new Dictionary<int, LevelResourcePathScriptableObject>();
 
-    private static LevelManager _instance;
-    public static LevelManager Instance 
-    { 
-        get => _instance; 
-        private set { _instance = value; }  
-    }
-    private void Awake()
+    [Inject]
+    public LevelManager(string levelPaths, string progressPath)
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        this.levelPaths = levelPaths;
+        this.progressPath = progressPath;
 
-        Instance = this;
-        foreach (LevelResourcePath resource in Resources.LoadAll<LevelResourcePath>(ScriptableObjectsFolderPath).ToArray())
+        Debug.Log($"Progress path:{progressPath}\nLevelsPaths:{levelPaths}");
+
+        // read current progress
+
+        foreach (LevelResourcePathScriptableObject resource in Resources.LoadAll<LevelResourcePathScriptableObject>(levelPaths).ToArray())
         {
             kvp.Add(resource.level, resource);
         }
         Debug.Log($"Loaded paths for {kvp.Count} levels.");
-        DontDestroyOnLoad(gameObject);
-
     }
 
-    public LevelResourcePath GetLevelResourcePath()
+    public LevelModel GetLevelModel()
     {
-        return kvp[currentLevel];
+        try
+        {
+            LevelResourcePathScriptableObject levelResourcePath = kvp[currentLevel];
+        }
+        catch {
+            //Debug.LogException(e);
+        }
+        return null;
     }
-    public void AddLevel(int level, string path)
+    public void AddLevel(LevelModel model, string path, List<Container> containers)
     {
-        var resourceSO = new LevelResourcePath() { path = path, level = level };
-        kvp.Add(level, resourceSO);
-        AssetDatabase.CreateAsset(resourceSO, $"ScriptableObjectsFolderPath/PathLevel{level}.asset");
+        var resourceSO = new LevelResourcePathScriptableObject() { path = path, level = model.level };
+        kvp.Add(model.level, resourceSO);
+        AssetDatabase.CreateAsset(resourceSO, $"ScriptableObjectsFolderPath/PathLevel{model.level}.asset");
         AssetDatabase.SaveAssets();
     }
-
-}
-
-[CreateAssetMenu(fileName ="LevelResourcePath", menuName = "Scriptable Objects/Level Resource Path", order = 1)]
-public class LevelResourcePath: ScriptableObject
-{
-    public int level;
-    public string path;
 }
