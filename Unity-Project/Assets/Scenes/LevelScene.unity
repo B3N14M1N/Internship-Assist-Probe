@@ -299,6 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 244561174}
+  - component: {fileID: 244561175}
   m_Layer: 0
   m_Name: Shelf
   m_TagString: Untagged
@@ -325,6 +326,31 @@ Transform:
   - {fileID: 259117909}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &244561175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244561173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2d9d196659488418e6388677ca0279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container:
+    Layers:
+    - layerPosition: {x: 0, y: 2, z: 0}
+      layerOrder: 1
+      status: 2
+      Slot1:
+        gameItemId: 0
+      Slot2:
+        gameItemId: 0
+      Slot3:
+        gameItemId: 0
+  test:
+    Layers: []
 --- !u!1 &259117908
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,12 +395,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 259117908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de1e3c3b2ba053d40b527e419f050827, type: 3}
+  m_Script: {fileID: 11500000, guid: 011572df276d9764d86536b7255baa7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerPosition: {x: 0, y: 2, z: 0}
-  layerOrder: 1
-  status: 2
+  layer:
+    layerPosition: {x: 0, y: 2, z: 0}
+    layerOrder: 1
+    status: 2
+    Slot1:
+      gameItemId: 0
+    Slot2:
+      gameItemId: 0
+    Slot3:
+      gameItemId: 0
   Slot1: {fileID: 323073251}
   Slot2: {fileID: 1158188639}
   Slot3: {fileID: 73880964}
@@ -1216,7 +1249,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632005211}
-  - component: {fileID: 632005212}
   m_Layer: 0
   m_Name: Layer
   m_TagString: Untagged
@@ -1242,24 +1274,6 @@ Transform:
   - {fileID: 1222084892}
   m_Father: {fileID: 244561174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &632005212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632005210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de1e3c3b2ba053d40b527e419f050827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerPosition: {x: 0, y: 2, z: 0}
-  layerOrder: 0
-  status: 1
-  Slot1: {fileID: 1620567785}
-  Slot2: {fileID: 1121345442}
-  Slot3: {fileID: 1222084893}
 --- !u!1 &638981390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,7 +1555,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.07, y: 6.55}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

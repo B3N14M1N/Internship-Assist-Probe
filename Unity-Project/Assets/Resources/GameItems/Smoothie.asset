@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7cba35825a59704cb116eb70c42ff6c, type: 3}
-  m_Name: BananaPancake
+  m_Name: Smoothie
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 0
-    sprite: {fileID: 21300000, guid: 0491533c9fb615346ad9c4cc46834fab, type: 3}
-    position: {x: 0, y: 0, z: 0}
-    scale: {x: 0.8, y: 0.75, z: 0.75}
+    gameItemId: 8
+    sprite: {fileID: 21300000, guid: 89033818ffe2eb54793eeff2ad0e20ad, type: 3}
+    position: {x: 0, y: 0.3, z: 0}
+    scale: {x: 1, y: 0.8, z: 1}

@@ -11,5 +11,5 @@ public class LevelModel
     [SerializeField]
     public float LevelTime;
     [SerializeField]
-    public List<Container> containers;
+    public List<ContainerMono> containers;
 }
