@@ -62,17 +62,17 @@ public class LayerMono : MonoBehaviour
     {
         if(Slot1 != null)
         {
-            Slot1.Destroy();
+            Slot1.RemoveSlot();
             Slot1 = null;
         }
         if (Slot2 != null)
         {
-            Slot2.Destroy();
+            Slot2.RemoveSlot();
             Slot2 = null;
         }
         if (Slot3 != null)
         {
-            Slot3.Destroy();
+            Slot3.RemoveSlot();
             Slot3 = null;
         }
 

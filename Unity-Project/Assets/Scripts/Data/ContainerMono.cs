@@ -42,8 +42,7 @@ public class ContainerMono : MonoBehaviour
         }
 
         transform.parent.GetComponent<LevelBuilderManager>().RemoveContainer(this);
-        while(transform.childCount > 0)
-            DestroyImmediate(transform.GetChild(0));
+
         DestroyImmediate(gameObject);
     }
 
