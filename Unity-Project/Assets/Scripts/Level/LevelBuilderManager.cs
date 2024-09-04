@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -5,33 +6,28 @@ using Zenject;
 
 public class LevelBuilderManager : MonoBehaviour
 {
-    [Inject]
+    #region FIELDS
+
+    [Inject, HideInInspector]
     public LevelManager levelManager;
 
     public int Level;
     public float LevelTime;
-
     public List<ContainerMono> containersMono = new List<ContainerMono>();
     
     private LevelModel LevelModel => LevelModel.ToModel(containersMono, Level, LevelTime);
+
+    #endregion
+
+    #region ADD & REMOVE CONTAINERS
+
     public ContainerMono AddContainer()
     {
-        var prefab = Resources.Load("Prefabs/Container") as GameObject;
-        var newContainer = Instantiate(prefab).GetComponent<ContainerMono>();
-        newContainer.transform.parent = transform;
-        containersMono.Add(newContainer);
-        return newContainer;
+        return AddContainer(new Container());
     }
     public ContainerMono AddContainer(Container container)
     {
-        var prefab = Resources.Load("Prefabs/Container") as GameObject;
-        var newContainer = Instantiate(prefab).GetComponent<ContainerMono>();
-        newContainer.transform.parent = transform;
-        newContainer.transform.position = container.Position;
-        foreach (Layer layer in container.Layers)
-        {
-            newContainer.AddLayer(layer);
-        }
+        ContainerMono newContainer = ContainerMono.InitializeNew(container, transform);
         containersMono.Add(newContainer);
         return newContainer;
     }
@@ -39,17 +35,23 @@ public class LevelBuilderManager : MonoBehaviour
     {
         containersMono.Remove(container);
     }
+    #endregion
+
+    #region SAVE & LOAD & RESET
+
     public void SaveLevel()
     {
-        string json = JsonUtility.ToJson(LevelModel);
-        File.WriteAllText(Application.persistentDataPath + "/level1", json);
-        Debug.Log(Application.persistentDataPath + "/level1");
+        string json = JsonUtility.ToJson(LevelModel, true);
+        File.WriteAllText(Application.persistentDataPath + $"/Level{Level}", json);
+        Debug.Log(Application.persistentDataPath + $"/Level{Level}");
         Debug.Log(json);
     }
 
     public void LoadLevel()
     {
-            string json = File.ReadAllText(Application.persistentDataPath + "/level1");
+        try
+        {
+            string json = File.ReadAllText(Application.persistentDataPath + $"/level{Level}");
 
             var levelModel = JsonUtility.FromJson<LevelModel>(json);
 
@@ -63,13 +65,19 @@ public class LevelBuilderManager : MonoBehaviour
             }
 
             Debug.Log(json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
 
     public void ResetLevel()
     {
-        while (containersMono.Count > 0) 
+        while (containersMono.Count > 0)
         {
             containersMono[0].RemoveContainer();
         }
     }
+    #endregion
 }

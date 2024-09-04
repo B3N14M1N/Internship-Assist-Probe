@@ -1,8 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LayerMono : MonoBehaviour
 {
+    #region FIELDS
+
     private static readonly Vector3 backroundLayerOffset = new Vector3(0.85f, 0.5f, 0f);
     private static readonly float SlotDistance = 6.5f;
     private static readonly Color backColor = new Color(130f / 256f, 130f / 256f, 130f / 256f, 1f);
@@ -18,44 +19,30 @@ public class LayerMono : MonoBehaviour
 
     public bool IsFull => Slot1 != null && Slot2 != null && Slot3 != null;
     public bool Combine => IsFull && Slot1.ItemId == Slot2.ItemId && Slot2.ItemId == Slot3.ItemId;
-
     public Layer Layer => Layer.ToModel(this);
+    #endregion
 
-    public void LoadLayer(Layer layer)
+
+    #region CREATE & REMOVE LAYER
+
+    public static LayerMono InitializeNew(Layer layer, Transform parent)
     {
-        var prefab = Resources.Load("Prefabs/Slot") as GameObject;
+        if (layer == null)
+            return null;
 
-        layerPosition = layer.layerPosition;
-        layerOrder = layer.layerOrder;
+        var prefab = Resources.Load("Prefabs/Layer") as GameObject;
+        var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
+        newLayer.transform.parent = parent;
 
-        if(layer.Slot1.gameItemId != 0)
-        {
-            if (Slot1 == null)
-            {
-                Slot1 = Instantiate(prefab).GetComponent<SlotMono>();
-                Slot1.transform.parent = this.transform;
-            }
-            Slot1.LoadGameItem(layer.Slot1);
-        }
-        if (layer.Slot2.gameItemId != 0)
-        {
-            if(Slot2 == null)
-            {
-                Slot2 = Instantiate(prefab).GetComponent<SlotMono>();
-                Slot2.transform.parent = this.transform;
-            }
-            Slot2.LoadGameItem(layer.Slot2);
-        }
-        if (layer.Slot3.gameItemId != 0)
-        {
-            if(Slot3 == null)
-            {
-                Slot3 = Instantiate(prefab).GetComponent<SlotMono>();
-                Slot3.transform.parent = this.transform;
-            }
-            Slot3.LoadGameItem(layer.Slot3);
-        }
-        SetStatus(layer.status);
+        newLayer.layerPosition = layer.layerPosition;
+        newLayer.layerOrder = layer.layerOrder;
+
+        newLayer.Slot1 = SlotMono.InitializeNew(layer.Slot1, newLayer.transform);
+        newLayer.Slot2 = SlotMono.InitializeNew(layer.Slot2, newLayer.transform);
+        newLayer.Slot3 = SlotMono.InitializeNew(layer.Slot3, newLayer.transform);
+
+        newLayer.SetStatus(layer.status);
+        return newLayer;
     }
 
     public void RemoveLayer()
@@ -79,7 +66,9 @@ public class LayerMono : MonoBehaviour
         transform.parent.GetComponent<ContainerMono>().RemoveLayer(this);
         DestroyImmediate(gameObject);
     }
+    #endregion
 
+    #region LAYER EDITING
     public int PullLayer()
     {
         return MoveLayer(-1);
@@ -139,4 +128,5 @@ public class LayerMono : MonoBehaviour
             Slot3?.SetStatus();
         }
     }
+    #endregion
 }
