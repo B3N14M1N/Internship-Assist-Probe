@@ -12,16 +12,21 @@ public enum LayerStatus
 [Serializable]
 public class Layer
 {
-    [SerializeField]
     public Vector3 layerPosition;
-    [SerializeField]
     public int layerOrder;
-    [SerializeField]
     public LayerStatus status;
-    [SerializeField]
     public Slot Slot1;
-    [SerializeField]
     public Slot Slot2;
-    [SerializeField]
     public Slot Slot3;
+
+    public static Layer ToModel(LayerMono layerMono)
+        => new Layer()
+        {
+            layerPosition = layerMono.layerPosition,
+            layerOrder = layerMono.layerOrder,
+            status = layerMono.status,
+            Slot1 = layerMono.Slot1 == null ? Slot.Empty : layerMono.Slot1.Slot,
+            Slot2 = layerMono.Slot2 == null ? Slot.Empty : layerMono.Slot2.Slot,
+            Slot3 = layerMono.Slot3 == null ? Slot.Empty : layerMono.Slot3.Slot,
+        };
 }

@@ -5,28 +5,36 @@ using UnityEngine;
 [Serializable]
 public class SlotMono : MonoBehaviour
 {
-    public CircleCollider2D slotCollider;
-    public SpriteRenderer spriteRenderer;
+    private CircleCollider2D slotCollider;
+    private SpriteRenderer spriteRenderer;
 
     private Vector3 slotPosition;
-    private int gameItemId;
+    private GameItemData data;
+
+
+    public int ItemId => data.gameItemId;
     public Vector3 SlotPosition { get { return slotPosition; } set { transform.localPosition = value; slotPosition = value; } }
-    public int ItemId => gameItemId;
     public bool Draggable { get { return slotCollider.enabled; } set { slotCollider.enabled = value; } }
     public bool Render { set { gameObject.SetActive(value); } get { return gameObject.activeSelf; } }
     public int RenderOrder { get {return spriteRenderer.sortingOrder; } set { spriteRenderer.sortingOrder = value; } }
     public Color RenderColor { set { spriteRenderer.color = value; } }
+    public Slot Slot => Slot.ToModel(this);
 
-    public bool LoadGameItem(GameItemData item, Vector3 positionInContainerLayer)
+    #region Methods
+    public void LoadGameItem(Slot item)
     {
         if (item != null)
-            return false;
-        gameItemId = item.gameItemId;
-        SlotPosition = positionInContainerLayer;
-        spriteRenderer.sprite = item.sprite;
-        transform.localPosition = SlotPosition + item.position;
-        transform.localScale = item.scale;
-        return true;
+        {
+            // get GameItemData from manager and load the sprite;
+            data = ScriptableObjectsManager.GetGameItemData(item.gameItemId);
+
+            if (data != null)
+            {
+                spriteRenderer.sprite = data.sprite;
+                spriteRenderer.transform.localPosition = data.position;
+                spriteRenderer.transform.localScale = data.scale;
+            }
+        }
     }
 
     public void SetStatus(bool render = false, bool draggable = false, int renderOrder = 0, Color? renderColor = null)
@@ -36,6 +44,8 @@ public class SlotMono : MonoBehaviour
         RenderColor = renderColor !=null ? renderColor.Value : Color.white;
         RenderOrder = renderOrder;
     }
+
+    #endregion
 
     #region Dragging
 
@@ -58,6 +68,16 @@ public class SlotMono : MonoBehaviour
     {
         transform.localPosition = slotPosition;
     }
+    #endregion
 
+    #region Disposing
+    public void Destroy()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+        DestroyImmediate(gameObject);
+    }
     #endregion
 }

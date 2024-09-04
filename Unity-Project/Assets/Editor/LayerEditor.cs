@@ -18,25 +18,56 @@ public class LayerEditor : Editor
             t.PullLayer();
         }
         EditorGUILayout.EndHorizontal();
+        if (GUILayout.Button("Remove Layer"))
+        {
+            t.RemoveLayer();
+        }
     }
 }
 
 [CustomEditor(typeof(ContainerMono))]
-public class ContainerEditor : Editor
+public class ContainerMonoEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         ContainerMono t = (ContainerMono)target;
         DrawDefaultInspector();
+        if (GUILayout.Button("AddLayer"))
+        {
+            t.AddLayer();
+        }
+        if (GUILayout.Button("Remove Container"))
+        {
+            t.RemoveContainer();
+        }
+    }
+}
+
+[CustomEditor(typeof(LevelBuilderManager))]
+public class LevelBuilderManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        LevelBuilderManager t = (LevelBuilderManager)target;
+        DrawDefaultInspector();
+        if (GUILayout.Button("Add Container"))
+        {
+            t.AddContainer();
+        }
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            t.SaveToJSON();
+            t.SaveLevel();
+        }
+        if (GUILayout.Button("Reset"))
+        {
+            t.ResetLevel();
         }
         if (GUILayout.Button("Load"))
         {
-            t.ReadFromJSON();
+            t.LoadLevel();
         }
         EditorGUILayout.EndHorizontal();
+
     }
 }

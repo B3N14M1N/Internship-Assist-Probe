@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ghee
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 0
+    gameItemId: 13
     sprite: {fileID: 21300000, guid: d9656bc398993c94d9cbf70d541e1292, type: 3}
     position: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}

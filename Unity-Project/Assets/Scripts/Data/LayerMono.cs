@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LayerMono : MonoBehaviour
@@ -8,7 +8,9 @@ public class LayerMono : MonoBehaviour
     private static readonly Color backColor = new Color(130f / 256f, 130f / 256f, 130f / 256f, 1f);
     private static readonly Color frontColor = Color.white;
 
-    public Layer layer;
+    public Vector3 layerPosition;
+    public int layerOrder;
+    public LayerStatus status;
 
     public SlotMono Slot1;
     public SlotMono Slot2;
@@ -16,12 +18,66 @@ public class LayerMono : MonoBehaviour
 
     public bool IsFull => Slot1 != null && Slot2 != null && Slot3 != null;
     public bool Combine => IsFull && Slot1.ItemId == Slot2.ItemId && Slot2.ItemId == Slot3.ItemId;
-    public void LoadLayer(Layer layer, LayerStatus status, Vector3 layerPosition)
-    {
-        this.layer = layer;
-        this.layer.layerPosition = layerPosition;
 
-        SetStatus(status);
+    public Layer Layer => Layer.ToModel(this);
+
+    public void LoadLayer(Layer layer)
+    {
+        var prefab = Resources.Load("Prefabs/Slot") as GameObject;
+
+        layerPosition = layer.layerPosition;
+        layerOrder = layer.layerOrder;
+
+        if(layer.Slot1.gameItemId != 0)
+        {
+            if (Slot1 == null)
+            {
+                Slot1 = Instantiate(prefab).GetComponent<SlotMono>();
+                Slot1.transform.parent = this.transform;
+            }
+            Slot1.LoadGameItem(layer.Slot1);
+        }
+        if (layer.Slot2.gameItemId != 0)
+        {
+            if(Slot2 == null)
+            {
+                Slot2 = Instantiate(prefab).GetComponent<SlotMono>();
+                Slot2.transform.parent = this.transform;
+            }
+            Slot2.LoadGameItem(layer.Slot2);
+        }
+        if (layer.Slot3.gameItemId != 0)
+        {
+            if(Slot3 == null)
+            {
+                Slot3 = Instantiate(prefab).GetComponent<SlotMono>();
+                Slot3.transform.parent = this.transform;
+            }
+            Slot3.LoadGameItem(layer.Slot3);
+        }
+        SetStatus(layer.status);
+    }
+
+    public void RemoveLayer()
+    {
+        if(Slot1 != null)
+        {
+            Slot1.Destroy();
+            Slot1 = null;
+        }
+        if (Slot2 != null)
+        {
+            Slot2.Destroy();
+            Slot2 = null;
+        }
+        if (Slot3 != null)
+        {
+            Slot3.Destroy();
+            Slot3 = null;
+        }
+
+        transform.parent.GetComponent<ContainerMono>().RemoveLayer(this);
+        DestroyImmediate(gameObject);
     }
 
     public int PullLayer()
@@ -36,19 +92,19 @@ public class LayerMono : MonoBehaviour
 
     private int MoveLayer(int direction)
     {
-        if ((layer.layerOrder > -1 && direction < 0) || (direction > 0 && layer.layerOrder < 2))
-            layer.layerOrder += direction;
+        if ((layerOrder > -1 && direction < 0) || (direction > 0 && layerOrder < 2))
+            layerOrder += direction;
 
-        var newStatus = layer.status;
-        if (layer.layerOrder > 1 && layer.status != LayerStatus.hidden)
+        var newStatus = status;
+        if (layerOrder > 1 && status != LayerStatus.hidden)
             newStatus = LayerStatus.hidden;
-        if (layer.layerOrder == 1 && layer.status != LayerStatus.back)
+        if (layerOrder == 1 && status != LayerStatus.back)
             newStatus = LayerStatus.back;
-        if (layer.layerOrder == 0 && layer.status != LayerStatus.front)
+        if (layerOrder == 0 && status != LayerStatus.front)
             newStatus = LayerStatus.front;
         SetStatus(newStatus);
 
-        return layer.layerOrder;
+        return layerOrder;
     }
     public void SetStatus(LayerStatus status)
     {
@@ -59,22 +115,22 @@ public class LayerMono : MonoBehaviour
         if (Slot3 != null)
             Slot3.SlotPosition = new Vector3(SlotDistance, 0f, 0f);
 
-        this.layer.status = status;
+        this.status = status;
         if (status == LayerStatus.front)
         {
-            transform.localPosition = layer.layerPosition;
+            transform.localPosition = layerPosition;
 
-            Slot1?.SetStatus(true, true, -layer.layerOrder, frontColor);
-            Slot2?.SetStatus(true, true, -layer.layerOrder, frontColor);
-            Slot3?.SetStatus(true, true, -layer.layerOrder, frontColor);
+            Slot1?.SetStatus(true, true, -layerOrder, frontColor);
+            Slot2?.SetStatus(true, true, -layerOrder, frontColor);
+            Slot3?.SetStatus(true, true, -layerOrder, frontColor);
         }
         if (status == LayerStatus.back)
         {
-            transform.localPosition = layer.layerPosition + backroundLayerOffset;
+            transform.localPosition = layerPosition + backroundLayerOffset;
 
-            Slot1?.SetStatus(true, false, -layer.layerOrder, backColor);
-            Slot2?.SetStatus(true, false, -layer.layerOrder, backColor);
-            Slot3?.SetStatus(true, false, -layer.layerOrder, backColor);
+            Slot1?.SetStatus(true, false, -layerOrder, backColor);
+            Slot2?.SetStatus(true, false, -layerOrder, backColor);
+            Slot3?.SetStatus(true, false, -layerOrder, backColor);
         }
         if (status == LayerStatus.hidden)
         {
@@ -82,9 +138,5 @@ public class LayerMono : MonoBehaviour
             Slot2?.SetStatus();
             Slot3?.SetStatus();
         }
-    }
-    public void DrawSlots()
-    {
-        //Create || draw SlotMono
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quiche
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 7
+    gameItemId: 19
     sprite: {fileID: 21300000, guid: 89c26cd2d65b27c42b62d26aa31a5638, type: 3}
     position: {x: 0, y: -0.4, z: 0}
     scale: {x: 0.8, y: 0.8, z: 0.8}

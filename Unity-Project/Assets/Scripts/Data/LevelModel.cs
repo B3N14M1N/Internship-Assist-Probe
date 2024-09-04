@@ -1,15 +1,25 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class LevelModel
 {
-    [SerializeField]
     public int level;
-    [SerializeField]
     public float LevelTime;
-    [SerializeField]
-    public List<ContainerMono> containers;
+    public List<Container> containers;
+
+    public static LevelModel ToModel(List<ContainerMono> containersMono, int level, float LevelTime)
+    {
+        var model = new LevelModel();
+
+        model.level = level;
+        model.LevelTime = LevelTime;
+
+        model.containers = new List<Container>();
+        foreach (var container in containersMono)
+        {
+            model.containers.Add(container.Container);
+        }
+        return model;
+    }
 }

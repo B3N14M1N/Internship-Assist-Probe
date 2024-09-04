@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlainPorridge
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 0
+    gameItemId: 18
     sprite: {fileID: 21300000, guid: 7e30c4466a79cfe48aeb78a2d88a5b80, type: 3}
     position: {x: 0, y: 0, z: 0}
     scale: {x: 1, y: 1, z: 1}

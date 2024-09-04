@@ -1,50 +1,78 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class ContainerMono : MonoBehaviour
 {
-    [SerializeField]
-    public Container container;
-    [SerializeField]
-    public Container test;
+    private static Vector3 layerPosition = new Vector3(0, 2, 0);
 
-    public void Awake()
+    public List<LayerMono> layers = new List<LayerMono>();
+
+    public Container Container => Container.ToModel(this);
+
+    public LayerMono AddLayer()
     {
-        GetAllLayer();
+
+        var prefab = Resources.Load("Prefabs/Layer") as GameObject;
+        var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
+        newLayer.transform.parent = transform;
+        newLayer.layerPosition = layerPosition;
+        PushLayers();
+        layers.Insert(0, newLayer);
+        return newLayer;
     }
 
-    private void GetAllLayer()
+    public LayerMono AddLayer(Layer layer)
     {
-        container = new Container();
-        foreach (LayerMono layer in GetComponentsInChildren<LayerMono>())
-            container.Layers.Add(layer.layer);
+        var prefab = Resources.Load("Prefabs/Layer") as GameObject;
+        var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
+        newLayer.transform.parent = transform;
+        newLayer.layerPosition = layerPosition;
+        newLayer.LoadLayer(layer);
+        PushLayers();
+        layers.Insert(0, newLayer);
+        return newLayer;
+    }
+    public void RemoveContainer()
+    {
+        while (layers.Count > 0)
+        {
+            layers[0].RemoveLayer();
+        }
+
+        transform.parent.GetComponent<LevelBuilderManager>().RemoveContainer(this);
+        while(transform.childCount > 0)
+            DestroyImmediate(transform.GetChild(0));
+        DestroyImmediate(gameObject);
     }
 
-    public void SaveToJSON()
+    private void PushLayers(int index = 0)
     {
-        GetAllLayer();
-        string json = JsonUtility.ToJson(container);
-        File.WriteAllText(Application.persistentDataPath + "/level1", json);
-        Debug.Log(Application.persistentDataPath + "/level1");
-        Debug.Log(json);
+        foreach (var layer in layers)
+        {
+            layer.PushLayer();
+        }
     }
-    public void ReadFromJSON()
+
+    private void PullLayers(int index = 0)
     {
-        string json = File.ReadAllText(Application.persistentDataPath + "/level1");
-
-        test = JsonUtility.FromJson<Container>(json);
-        Debug.Log(json);
+        for (int i = index; i < layers.Count; i++)
+        {
+            layers[i].PullLayer();
+        }
+        foreach (var layer in layers)
+        {
+            layer.PullLayer();
+        }
     }
-}
-
-[Serializable]
-public class Container
-{
-    [SerializeField]
-    public List<Layer> Layers = new List<Layer>();
+    public void RemoveLayer(LayerMono layer)
+    {
+        var index = layers.IndexOf(layer);
+        if (index != -1)
+        {
+            layers.Remove(layer);
+            PullLayers(index);
+        }
+    }
 }
