@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 
+[SerializeField]
 public enum LayerStatus
 {
     hidden = 0,
@@ -14,19 +15,22 @@ public class Layer
 {
     public Vector3 layerPosition;
     public int layerOrder;
-    public LayerStatus status;
+    public int status;
     public Slot Slot1;
     public Slot Slot2;
     public Slot Slot3;
 
     public static Layer ToModel(LayerMono layerMono)
-        => new Layer()
+    {
+        Debug.Log("Converting LayerMono to Layer");
+        return new Layer()
         {
             layerPosition = layerMono.layerPosition,
             layerOrder = layerMono.layerOrder,
-            status = layerMono.status,
+            status = (int)layerMono.status,
             Slot1 = layerMono.Slot1 == null ? Slot.Empty : layerMono.Slot1.Slot,
             Slot2 = layerMono.Slot2 == null ? Slot.Empty : layerMono.Slot2.Slot,
             Slot3 = layerMono.Slot3 == null ? Slot.Empty : layerMono.Slot3.Slot,
         };
+    }
 }

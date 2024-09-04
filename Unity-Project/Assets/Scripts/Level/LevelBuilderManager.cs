@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
 public class LevelBuilderManager : MonoBehaviour
 {
-    #region FIELDS
+    public void Start()
+    {
+        Application.targetFrameRate = 30;
+    }
 
+    #region FIELDS
     [Inject, HideInInspector]
     public LevelManager levelManager;
 
@@ -41,30 +46,23 @@ public class LevelBuilderManager : MonoBehaviour
 
     public void SaveLevel()
     {
-        string json = JsonUtility.ToJson(LevelModel, true);
-        File.WriteAllText(Application.persistentDataPath + $"/Level{Level}", json);
-        Debug.Log(Application.persistentDataPath + $"/Level{Level}");
-        Debug.Log(json);
+        Debug.Log("Starting Saving");
+        levelManager.AddLevel(LevelModel);
     }
 
     public void LoadLevel()
     {
         try
         {
-            string json = File.ReadAllText(Application.persistentDataPath + $"/level{Level}");
-
-            var levelModel = JsonUtility.FromJson<LevelModel>(json);
-
+            var levelModel = levelManager.GetLevelModel(Level);
             ResetLevel();
-            this.Level = levelModel.level;
-            this.LevelTime = levelModel.LevelTime;
+            Level = levelModel.level;
+            LevelTime = levelModel.LevelTime;
 
             foreach (Container container in levelModel.containers)
             {
                 AddContainer(container);
             }
-
-            Debug.Log(json);
         }
         catch (Exception e)
         {

@@ -5,15 +5,25 @@ using Zenject;
 public class ScriptableObjectsManager : MonoBehaviour
 {
     [Inject]
-    private static List<GameItemScriptableObject> items;
+    public List<GameItemScriptableObject> items;
 
+    private static List<GameItemScriptableObject> staticList;
+
+
+    public void Awake()
+    {
+        staticList = items;
+        Debug.Log(staticList.Count);
+    }
     public static GameItemData GetGameItemData(int gameItemId)
     {
-        for (int i = 0; i < items.Count; i++)
+        Debug.Log($"Searching for ID: {gameItemId}.");
+        for (int i = 0; i < staticList.Count; i++)
         {
-            if (items[i].item.gameItemId == gameItemId)
-                return items[i].item;
+            if (staticList[i].item.gameItemId == gameItemId)
+                return staticList[i].item;
         }
+        Debug.Log("Not Found");
         return null;
     }
 }

@@ -36,12 +36,14 @@ public class LayerMono : MonoBehaviour
 
         newLayer.layerPosition = layer.layerPosition;
         newLayer.layerOrder = layer.layerOrder;
+        newLayer.status = (LayerStatus)layer.status;
+
 
         newLayer.Slot1 = SlotMono.InitializeNew(layer.Slot1, newLayer.transform);
         newLayer.Slot2 = SlotMono.InitializeNew(layer.Slot2, newLayer.transform);
         newLayer.Slot3 = SlotMono.InitializeNew(layer.Slot3, newLayer.transform);
 
-        newLayer.SetStatus(layer.status);
+        newLayer.SetStatus((LayerStatus)layer.status);
         return newLayer;
     }
 

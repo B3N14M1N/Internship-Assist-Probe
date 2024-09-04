@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 [Serializable]
 public class ContainerMono : MonoBehaviour
@@ -29,8 +28,8 @@ public class ContainerMono : MonoBehaviour
 
         foreach (Layer layer in container.Layers)
         {
+            //newContainer.PushLayers();
             newContainer.layers.Insert(0, LayerMono.InitializeNew(layer,newContainer.transform));
-            newContainer.PushLayers();
         }
         return newContainer;
     }
@@ -56,14 +55,6 @@ public class ContainerMono : MonoBehaviour
 
     public LayerMono AddLayer(Layer layer)
     {
-        /*
-        var prefab = Resources.Load("Prefabs/Layer") as GameObject;
-        var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
-        newLayer.transform.parent = transform;
-        newLayer.layerPosition = layerPosition;
-
-        newLayer.LoadLayer(layer);
-        */
         var newLayer = LayerMono.InitializeNew(layer, transform);
         PushLayers();
         layers.Insert(0, newLayer);

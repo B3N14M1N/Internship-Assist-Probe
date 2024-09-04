@@ -11,7 +11,7 @@ public class LevelInitializator : MonoBehaviour
     private LevelModel levelModel;
     public void Awake()
     {
-        levelModel = levelManager.GetLevelModel();
+        levelModel = levelManager.GetLevelModel(0);
         if (levelModel != null)
         {
             InitializeScene();

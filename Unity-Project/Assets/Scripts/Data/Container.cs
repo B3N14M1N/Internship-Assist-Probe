@@ -10,6 +10,8 @@ public class Container
 
     public static Container ToModel(ContainerMono containerMono)
     {
+
+        Debug.Log("Converting ContainerMono to Container");
         var container = new Container() 
         {
             Position = containerMono.transform.localPosition,

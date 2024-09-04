@@ -12,7 +12,7 @@ public class SlotMono : MonoBehaviour
     private Vector3 slotPosition;
     private GameItemData data;
 
-    public int ItemId => data.gameItemId;
+    public int ItemId { get { return (data != null) ? data.gameItemId : 0; } }
     public Vector3 SlotPosition { get { return slotPosition; } set { transform.localPosition = value; slotPosition = value; } }
     public bool Draggable { get { return slotCollider.enabled; } set { slotCollider.enabled = value; } }
     public bool Render { set { gameObject.SetActive(value); } get { return gameObject.activeSelf; } }
