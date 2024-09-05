@@ -33,15 +33,19 @@ public class LevelManager
 
     public LevelModel GetLevelModel(int level)
     {
-        try
+        if (kvp.TryGetValue(level, out var path))
         {
-            string json = File.ReadAllText(kvp[level].path);
-
-            return JsonUtility.FromJson<LevelModel>(json);
+            try
+            {
+                string json = File.ReadAllText(kvp[level].path);
+                return JsonUtility.FromJson<LevelModel>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
-        catch(Exception e) {
-            Debug.LogException(e);
-        }
+        Debug.Log("Level requested not found.");
         return null;
     }
     public void AddLevel(LevelModel levelModel)

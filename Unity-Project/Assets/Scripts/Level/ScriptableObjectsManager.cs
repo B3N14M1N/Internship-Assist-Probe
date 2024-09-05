@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -7,23 +8,24 @@ public class ScriptableObjectsManager : MonoBehaviour
     [Inject]
     public List<GameItemScriptableObject> items;
 
-    private static List<GameItemScriptableObject> staticList;
-
+    private static Dictionary<int , GameItemScriptableObject> kvp;
 
     public void Awake()
     {
-        staticList = items;
-        Debug.Log(staticList.Count);
+        kvp = new Dictionary<int , GameItemScriptableObject>();
+        foreach (var item in items)
+        {
+            kvp.TryAdd(item.item.gameItemId, item);
+        }
+        Debug.Log($"Loaded {kvp.Count} items");
     }
     public static GameItemData GetGameItemData(int gameItemId)
     {
-        Debug.Log($"Searching for ID: {gameItemId}.");
-        for (int i = 0; i < staticList.Count; i++)
+        if(kvp.TryGetValue(gameItemId, out GameItemScriptableObject value))
         {
-            if (staticList[i].item.gameItemId == gameItemId)
-                return staticList[i].item;
+            return value.item;
         }
-        Debug.Log("Not Found");
+        Debug.Log($"Game Item with ID: {gameItemId}. Not Found");
         return null;
     }
 }

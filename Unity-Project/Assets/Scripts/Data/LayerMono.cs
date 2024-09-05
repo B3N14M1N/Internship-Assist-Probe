@@ -9,7 +9,6 @@ public class LayerMono : MonoBehaviour
     private static readonly Color backColor = new Color(130f / 256f, 130f / 256f, 130f / 256f, 1f);
     private static readonly Color frontColor = Color.white;
 
-    public Vector3 layerPosition;
     public int layerOrder;
     public LayerStatus status;
 
@@ -34,14 +33,16 @@ public class LayerMono : MonoBehaviour
         var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
         newLayer.transform.parent = parent;
 
-        newLayer.layerPosition = layer.layerPosition;
         newLayer.layerOrder = layer.layerOrder;
         newLayer.status = (LayerStatus)layer.status;
 
 
         newLayer.Slot1 = SlotMono.InitializeNew(layer.Slot1, newLayer.transform);
+        newLayer.Slot1.name = "Slot 1";
         newLayer.Slot2 = SlotMono.InitializeNew(layer.Slot2, newLayer.transform);
+        newLayer.Slot2.name = "Slot 2";
         newLayer.Slot3 = SlotMono.InitializeNew(layer.Slot3, newLayer.transform);
+        newLayer.Slot3.name = "Slot 3";
 
         newLayer.SetStatus((LayerStatus)layer.status);
         return newLayer;
@@ -65,12 +66,20 @@ public class LayerMono : MonoBehaviour
             Slot3 = null;
         }
 
-        transform.parent.GetComponent<ContainerMono>().RemoveLayer(this);
+        transform.GetComponentInParent<ContainerMono>()?.RemoveLayer(this);
         DestroyImmediate(gameObject);
     }
     #endregion
 
     #region LAYER EDITING
+
+    public void RemoveSlot(SlotMono slot)
+    {
+        if (Slot1 == slot) Slot1 = null;
+        if (Slot2 == slot) Slot2 = null;
+        if (Slot3 == slot) Slot3 = null;
+    }
+
     public int PullLayer()
     {
         return MoveLayer(-1);
@@ -83,7 +92,7 @@ public class LayerMono : MonoBehaviour
 
     private int MoveLayer(int direction)
     {
-        if ((layerOrder > -1 && direction < 0) || (direction > 0 && layerOrder < 2))
+        if (layerOrder > -1 && direction < 0 || direction > 0) //&& direction < 0) || (direction > 0 && layerOrder < 2))
             layerOrder += direction;
 
         var newStatus = status;
@@ -109,7 +118,7 @@ public class LayerMono : MonoBehaviour
         this.status = status;
         if (status == LayerStatus.front)
         {
-            transform.localPosition = layerPosition;
+            transform.localPosition = Vector3.zero;
 
             Slot1?.SetStatus(true, true, -layerOrder, frontColor);
             Slot2?.SetStatus(true, true, -layerOrder, frontColor);
@@ -117,7 +126,7 @@ public class LayerMono : MonoBehaviour
         }
         if (status == LayerStatus.back)
         {
-            transform.localPosition = layerPosition + backroundLayerOffset;
+            transform.localPosition = backroundLayerOffset;
 
             Slot1?.SetStatus(true, false, -layerOrder, backColor);
             Slot2?.SetStatus(true, false, -layerOrder, backColor);

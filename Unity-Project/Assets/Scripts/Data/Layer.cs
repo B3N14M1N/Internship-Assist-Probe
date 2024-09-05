@@ -13,7 +13,6 @@ public enum LayerStatus
 [Serializable]
 public class Layer
 {
-    public Vector3 layerPosition;
     public int layerOrder;
     public int status;
     public Slot Slot1;
@@ -22,10 +21,9 @@ public class Layer
 
     public static Layer ToModel(LayerMono layerMono)
     {
-        Debug.Log("Converting LayerMono to Layer");
+        //Debug.Log("Converting LayerMono to Layer");
         return new Layer()
         {
-            layerPosition = layerMono.layerPosition,
             layerOrder = layerMono.layerOrder,
             status = (int)layerMono.status,
             Slot1 = layerMono.Slot1 == null ? Slot.Empty : layerMono.Slot1.Slot,

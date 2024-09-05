@@ -10,11 +10,6 @@
             },
             "Layers": [
                 {
-                    "layerPosition": {
-                        "x": 0.0,
-                        "y": 2.0,
-                        "z": 0.0
-                    },
                     "layerOrder": 1,
                     "status": 2,
                     "Slot1": {
@@ -28,11 +23,6 @@
                     }
                 },
                 {
-                    "layerPosition": {
-                        "x": 0.0,
-                        "y": 2.0,
-                        "z": 0.0
-                    },
                     "layerOrder": 0,
                     "status": 1,
                     "Slot1": {
@@ -55,11 +45,6 @@
             },
             "Layers": [
                 {
-                    "layerPosition": {
-                        "x": 0.0,
-                        "y": 2.0,
-                        "z": 0.0
-                    },
                     "layerOrder": 2,
                     "status": 0,
                     "Slot1": {
@@ -73,11 +58,6 @@
                     }
                 },
                 {
-                    "layerPosition": {
-                        "x": 0.0,
-                        "y": 2.0,
-                        "z": 0.0
-                    },
                     "layerOrder": 1,
                     "status": 2,
                     "Slot1": {
@@ -91,11 +71,6 @@
                     }
                 },
                 {
-                    "layerPosition": {
-                        "x": 0.0,
-                        "y": 2.0,
-                        "z": 0.0
-                    },
                     "layerOrder": 0,
                     "status": 1,
                     "Slot1": {

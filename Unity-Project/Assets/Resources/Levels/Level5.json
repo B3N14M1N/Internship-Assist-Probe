@@ -1,6 +1,6 @@
 {
-    "level": 1,
-    "LevelTime": 50.0,
+    "level": 5,
+    "LevelTime": 0.0,
     "containers": [
         {
             "Position": {
@@ -13,23 +13,23 @@
                     "layerOrder": 0,
                     "status": 1,
                     "Slot1": {
-                        "gameItemId": 4
+                        "gameItemId": 1
                     },
                     "Slot2": {
-                        "gameItemId": 6
+                        "gameItemId": 1
                     },
                     "Slot3": {
-                        "gameItemId": 11
+                        "gameItemId": 1
                     }
                 },
                 {
                     "layerOrder": 1,
                     "status": 2,
                     "Slot1": {
-                        "gameItemId": 11
+                        "gameItemId": 0
                     },
                     "Slot2": {
-                        "gameItemId": 4
+                        "gameItemId": 5
                     },
                     "Slot3": {
                         "gameItemId": 0
@@ -48,39 +48,39 @@
                     "layerOrder": 0,
                     "status": 1,
                     "Slot1": {
-                        "gameItemId": 5
+                        "gameItemId": 0
                     },
                     "Slot2": {
-                        "gameItemId": 6
+                        "gameItemId": 0
                     },
                     "Slot3": {
-                        "gameItemId": 9
+                        "gameItemId": 12
                     }
                 },
                 {
                     "layerOrder": 1,
                     "status": 2,
                     "Slot1": {
-                        "gameItemId": 8
+                        "gameItemId": 12
                     },
                     "Slot2": {
-                        "gameItemId": 0
+                        "gameItemId": 4
                     },
                     "Slot3": {
-                        "gameItemId": 5
+                        "gameItemId": 0
                     }
                 },
                 {
                     "layerOrder": 2,
                     "status": 0,
                     "Slot1": {
-                        "gameItemId": 3
+                        "gameItemId": 0
                     },
                     "Slot2": {
-                        "gameItemId": 3
+                        "gameItemId": 7
                     },
                     "Slot3": {
-                        "gameItemId": 3
+                        "gameItemId": 0
                     }
                 }
             ]

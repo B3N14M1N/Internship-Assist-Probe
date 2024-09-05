@@ -7,7 +7,6 @@ public class ContainerMono : MonoBehaviour
 {
     #region FIELDS
 
-    private static Vector3 layerPosition = new Vector3(0, 2, 0);
     public List<LayerMono> layers = new List<LayerMono>();
     public LayerMono ActiveLayer => layers[0];
     public Container Container => Container.ToModel(this);
@@ -28,8 +27,9 @@ public class ContainerMono : MonoBehaviour
 
         foreach (Layer layer in container.Layers)
         {
-            //newContainer.PushLayers();
-            newContainer.layers.Insert(0, LayerMono.InitializeNew(layer,newContainer.transform));
+            LayerMono layerMono = LayerMono.InitializeNew(layer, newContainer.transform);
+            layerMono.name = "Layer " + layer.layerOrder;
+            newContainer.layers.Insert(0, layerMono);
         }
         return newContainer;
     }
@@ -40,7 +40,7 @@ public class ContainerMono : MonoBehaviour
             layers[0].RemoveLayer();
         }
 
-        transform.parent.GetComponent<LevelBuilderManager>().RemoveContainer(this);
+        transform.GetComponentInParent<LevelBuilderManager>()?.RemoveContainer(this);
 
         DestroyImmediate(gameObject);
     }
@@ -60,6 +60,12 @@ public class ContainerMono : MonoBehaviour
         layers.Insert(0, newLayer);
 
         return newLayer;
+    }
+
+    public void RearangeLayers()
+    {
+        List<LayerMono> newLayers = new List<LayerMono>();
+
     }
 
     private void PushLayers(int index = 0)

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -52,9 +50,9 @@ public class LevelBuilderManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        try
+        var levelModel = levelManager.GetLevelModel(Level);
+        if (levelModel != null)
         {
-            var levelModel = levelManager.GetLevelModel(Level);
             ResetLevel();
             Level = levelModel.level;
             LevelTime = levelModel.LevelTime;
@@ -63,10 +61,6 @@ public class LevelBuilderManager : MonoBehaviour
             {
                 AddContainer(container);
             }
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
         }
     }
 
