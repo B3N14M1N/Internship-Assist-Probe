@@ -28,7 +28,9 @@ public class SlotMono : MonoBehaviour
         if (slot == null)
             return null;
 
-        var prefab = Resources.Load("Prefabs/Slot") as GameObject;
+        var prefab = LevelManager.GetPrefab("Slot");
+        if (prefab == null)
+            return null;
 
         SlotMono newSlot = Instantiate(prefab).GetComponent<SlotMono>();
         newSlot.ItemId = slot.gameItemId;
@@ -55,8 +57,8 @@ public class SlotMono : MonoBehaviour
     public void LoadData(int itemGameDataId)
     {
         // get GameItemData from manager and load the sprite;
-        var data = ScriptableObjectsManager.GetGameItemData(itemGameDataId);
-        if (data == null) data = new GameItemData();
+        var data = LevelManager.GetGameItemData(itemGameDataId);
+        data ??= new GameItemData();
 
         spriteRenderer.sprite = data.sprite;
         spriteRenderer.transform.localPosition = data.position;
@@ -76,6 +78,7 @@ public class SlotMono : MonoBehaviour
 
     private LayerMono previousLayer;
     private ContainerMono previousContainer;
+    private int previousRenderOrder;
     private Vector3 offset;
     private Vector3 DragPosition()
     {
@@ -88,6 +91,8 @@ public class SlotMono : MonoBehaviour
         previousLayer = transform.GetComponentInParent<LayerMono>();
         previousContainer = previousLayer.transform.GetComponentInParent<ContainerMono>();
         offset = transform.position - DragPosition();
+        previousRenderOrder = RenderOrder;
+        RenderOrder = 10;
     }
     private void OnMouseDrag()
     {
@@ -96,6 +101,7 @@ public class SlotMono : MonoBehaviour
     private void OnMouseUp()
     {
         transform.localPosition = slotPosition;
+        RenderOrder = previousRenderOrder;
     }
     #endregion
 }

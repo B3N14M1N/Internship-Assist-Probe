@@ -29,7 +29,10 @@ public class LayerMono : MonoBehaviour
         if (layer == null)
             return null;
 
-        var prefab = Resources.Load("Prefabs/Layer") as GameObject;
+        var prefab = LevelManager.GetPrefab("Layer");
+        if (prefab == null)
+            return null;
+
         var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
         newLayer.transform.parent = parent;
 

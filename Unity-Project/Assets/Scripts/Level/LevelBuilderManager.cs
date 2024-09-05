@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
-public class LevelBuilderManager : MonoBehaviour
+public class LevelBuilderManager : MonoBehaviour, ILevelManager
 {
     public void Start()
     {
@@ -11,8 +9,6 @@ public class LevelBuilderManager : MonoBehaviour
     }
 
     #region FIELDS
-    [Inject, HideInInspector]
-    public LevelManager levelManager;
 
     public int Level;
     public float LevelTime;
@@ -45,12 +41,12 @@ public class LevelBuilderManager : MonoBehaviour
     public void SaveLevel()
     {
         Debug.Log("Starting Saving");
-        levelManager.AddLevel(LevelModel);
+        LevelManager.AddLevel(LevelModel);
     }
 
     public void LoadLevel()
     {
-        var levelModel = levelManager.GetLevelModel(Level);
+        var levelModel = LevelManager.GetLevelModel(Level);
         if (levelModel != null)
         {
             ResetLevel();

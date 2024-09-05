@@ -76,3 +76,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPath: LevelPaths
   progressDataPath: nothing
+  ItemsPath: GameItems
+  PrefabsPath: Prefabs

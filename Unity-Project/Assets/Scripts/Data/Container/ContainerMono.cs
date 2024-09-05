@@ -20,7 +20,11 @@ public class ContainerMono : MonoBehaviour
         if (container == null)
             return null;
 
-        var prefab = Resources.Load("Prefabs/Container") as GameObject;
+        var prefab = LevelManager.GetPrefab("Container");
+
+        if (prefab == null)
+            return null;
+
         var newContainer = Instantiate(prefab).GetComponent<ContainerMono>();
         newContainer.transform.parent = parent;
         newContainer.transform.localPosition = container.Position;
@@ -40,7 +44,7 @@ public class ContainerMono : MonoBehaviour
             layers[0].RemoveLayer();
         }
 
-        transform.GetComponentInParent<LevelBuilderManager>()?.RemoveContainer(this);
+        transform.GetComponentInParent<ILevelManager>()?.RemoveContainer(this);
 
         DestroyImmediate(gameObject);
     }
