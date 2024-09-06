@@ -21,4 +21,5 @@ public interface IContainer
     void ClearContainer();
     ILayer AddLayer(Layer layer = null);
     void RemoveLayer(ILayer layer = null);
+    void RearangeLayers(bool putEmptyLayersBehind = false);
 }

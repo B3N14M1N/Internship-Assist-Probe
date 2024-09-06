@@ -28,8 +28,7 @@ public class SlotMono : MonoBehaviour, ISlot
         set
         {
             value ??= Slot.Empty;
-            ItemId = value.gameItemId;
-            LoadData(AssetsManager.GetGameItemData(ItemId));
+            LoadData(AssetsManager.GetGameItemData(value.gameItemId));
         }
     }
     #endregion
@@ -45,9 +44,18 @@ public class SlotMono : MonoBehaviour, ISlot
     {
         data ??= new GameItemData();
 
+        ItemId = data.gameItemId;
         spriteRenderer.sprite = data.sprite;
         spriteRenderer.transform.localPosition = data.position;
         spriteRenderer.transform.localScale = data.scale;
+    }
+
+    public void SetStatus(bool render = false, bool draggable = false, int renderOrder = 0, Color? renderColor = null)
+    {
+        Render = render;
+        Draggable = draggable;
+        RenderColor = renderColor != null ? renderColor.Value : Color.white;
+        RenderOrder = renderOrder;
     }
 
     public void RemoveSlot()
@@ -61,13 +69,6 @@ public class SlotMono : MonoBehaviour, ISlot
         LoadData(null);
     }
 
-    public void SetStatus(bool render = false, bool draggable = false, int renderOrder = 0, Color? renderColor = null)
-    {
-        Render = render;
-        Draggable = draggable;
-        RenderColor = renderColor != null ? renderColor.Value : Color.white;
-        RenderOrder = renderOrder;
-    }
     #endregion
 
     #region Methods

@@ -10,11 +10,11 @@ public class LayerMono : MonoBehaviour, ILayer
     private static readonly Color frontColor = Color.white;
     private static readonly int ThisClassMaxSlots = 3;
 
-    public int LayerOrder {  get; set; }
-    public LayerStatus Status {  get; set; }
+    public LayerStatus Status { get; set; }
+
     private int maxSlots;
-    public int MaxSlots 
-    { 
+    public int MaxSlots
+    {
         get
         {
             return maxSlots == 0 ? ThisClassMaxSlots : maxSlots;
@@ -24,8 +24,9 @@ public class LayerMono : MonoBehaviour, ILayer
             maxSlots = value > 0 ? value : ThisClassMaxSlots;
         }
     }
+
     private ISlot[] slots;
-    public ISlot[] Slots 
+    public ISlot[] Slots
     {
         get
         {
@@ -51,7 +52,6 @@ public class LayerMono : MonoBehaviour, ILayer
             }
             return new Layer()
             {
-                LayerOrder = LayerOrder,
                 Status = Status,
                 MaxSlots = MaxSlots,
                 Slots = Slots
@@ -61,7 +61,6 @@ public class LayerMono : MonoBehaviour, ILayer
         {
             value ??= Layer.Empty;
 
-            LayerOrder = value.LayerOrder;
             Status = value.Status;
             MaxSlots = value.MaxSlots;
             ClearLayer();
@@ -73,6 +72,21 @@ public class LayerMono : MonoBehaviour, ILayer
                 (Slots[i] as MonoBehaviour).name = $"Slot {i}";
             }
             SetStatus(Status);
+        }
+    }
+
+    public bool IsEmpty
+    {
+        get
+        { 
+            if (slots == null)
+                return true;
+            foreach (var slot in this.slots)
+            {
+                if (slot?.ItemId != 0)
+                    return false;
+            }
+            return true;
         }
     }
     #endregion
@@ -92,10 +106,7 @@ public class LayerMono : MonoBehaviour, ILayer
     {
         for (int i = 0; i < MaxSlots && Slots != null; i++)
         {
-            if (Slots[i] != null)
-            {
-                Slots[i].RemoveSlot();
-            }
+            Slots[i]?.RemoveSlot();
         }
     }
     #endregion
@@ -117,63 +128,41 @@ public class LayerMono : MonoBehaviour, ILayer
         }
     }
 
-    public int PullLayer()
-    {
-        return MoveLayer(-1);
-    }
-
-    public int PushLayer()
-    {
-        return MoveLayer(+1);
-    }
-
-    private int MoveLayer(int direction)
-    {
-        if (LayerOrder > 0 && direction < 0 || direction > 0)
-            LayerOrder += direction;
-
-        var newStatus = Status;
-        if (LayerOrder > 1 && Status != LayerStatus.Hidden)
-            newStatus = LayerStatus.Hidden;
-        if (LayerOrder == 1 && Status != LayerStatus.Back)
-            newStatus = LayerStatus.Back;
-        if (LayerOrder == 0 && Status != LayerStatus.Front)
-            newStatus = LayerStatus.Front;
-        SetStatus(newStatus);
-
-        return LayerOrder;
-    }
     public void SetStatus(LayerStatus status)
     {
-        for(int i = 0; i < MaxSlots; i++)
+        Status = status;
+        for (int i = 0; i < MaxSlots; i++)
         {
             if (Slots[i] != null)
                 Slots[i].SlotPosition = new Vector3((-MaxSlots / 2 + i) * SlotDistance, 0f, 0f);
         }
-        Status = status;
-        if (status == LayerStatus.Front)
-        {
-            transform.localPosition = Vector3.zero;
 
-            foreach(ISlot slot in Slots)
-            {
-                slot?.SetStatus(true, true, -LayerOrder, frontColor);
-            }
-        }
-        if (status == LayerStatus.Back)
-        {
-            transform.localPosition = backroundLayerOffset;
-
-            foreach (ISlot slot in Slots)
-            {
-                slot?.SetStatus(true, false, -LayerOrder, backColor);
-            }
-        }
         if ((status & (LayerStatus.Hidden | LayerStatus.Empty)) != 0)
         {
             foreach (ISlot slot in Slots)
             {
                 slot?.SetStatus();
+            }
+        }
+        else
+        {
+            if ((status & LayerStatus.Front) != 0)
+            {
+                transform.localPosition = Vector3.zero;
+
+                foreach (ISlot slot in Slots)
+                {
+                    slot?.SetStatus(true, true, 0, frontColor);
+                }
+            }
+            if ((status & LayerStatus.Back) != 0)
+            {
+                transform.localPosition = backroundLayerOffset;
+
+                foreach (ISlot slot in Slots)
+                {
+                    slot?.SetStatus(true, false, -1, backColor);
+                }
             }
         }
     }

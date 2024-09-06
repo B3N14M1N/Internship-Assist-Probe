@@ -10,8 +10,7 @@
             },
             "Layers": [
                 {
-                    "LayerOrder": 0,
-                    "Status": 0,
+                    "Status": 2,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -26,7 +25,6 @@
                     ]
                 },
                 {
-                    "LayerOrder": 1,
                     "Status": 4,
                     "MaxSlots": 3,
                     "Slots": [
@@ -38,6 +36,21 @@
                         },
                         {
                             "gameItemId": 2
+                        }
+                    ]
+                },
+                {
+                    "Status": 9,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
                         }
                     ]
                 }

@@ -14,7 +14,6 @@ public enum LayerStatus
 [Serializable]
 public class Layer
 {
-    public int LayerOrder;
     public LayerStatus Status;
     public int MaxSlots;
     public Slot[] Slots;
@@ -26,15 +25,11 @@ public interface ILayer
 {
     void SetStatus(LayerStatus status);
     Layer Layer { get; set; }
-    int LayerOrder { get; set; }
     LayerStatus Status { get; set; }
     int MaxSlots { get; }
     ISlot[] Slots {  get; set; }
-
+    bool IsEmpty {  get; }
     void RemoveLayer();
     void ClearLayer();
     void RemoveSlot(ISlot slot);
-
-    int PullLayer();
-    int PushLayer();
 }

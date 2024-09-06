@@ -31,10 +31,9 @@ public class ContainerMono : MonoBehaviour, IContainer
             foreach (Layer layer in value.Layers)
             {
                 ILayer layerMono = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
-                (layerMono as MonoBehaviour).name = "Layer " + layer.LayerOrder;
-                Layers.Insert(0, layerMono);
+                Layers.Add(layerMono);
             }
-
+            RearangeLayers(true);
         }
     }
 
@@ -55,7 +54,14 @@ public class ContainerMono : MonoBehaviour, IContainer
     #endregion
 
 
-    #region CREATE & REMOVE CONTAINER
+    #region CLEAR & REMOVE CONTAINER
+    public void ClearContainer()
+    {
+        while (Layers?.Count > 0)
+        {
+            Layers[0].RemoveLayer();
+        }
+    }
 
     public void RemoveContainer()
     {
@@ -65,63 +71,66 @@ public class ContainerMono : MonoBehaviour, IContainer
         DestroyImmediate(gameObject);
     }
 
-    public void ClearContainer()
-    {
-        if (Layers != null)
-        {
-            while (Layers.Count > 0)
-            {
-                Layers[0].RemoveLayer();
-            }
-        }
-    }
     #endregion
 
-    #region ADD & REMOVE LAYER
+    #region ADD & REARANGE & REMOVE LAYERS
 
 
     public ILayer AddLayer(Layer layer = null)
     {
         layer ??= new Layer(); 
         var newLayer = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
-        PushLayers();
-        Layers.Insert(0, newLayer);
+        (newLayer as MonoBehaviour).name = $"Layer {Layers.Count}";
+        newLayer.SetStatus(LayerStatus.Empty);
+        Layers.Add(newLayer);
 
         return newLayer;
     }
 
-    public void RearangeLayers()
+    public void RearangeLayers(bool putEmptyLayersBehind = false)
     {
-        List<ILayer> newLayers = new List<ILayer>();
-
-    }
-
-    private void PushLayers(int index = 0)
-    {
-        foreach (var layer in Layers)
+        if (putEmptyLayersBehind)
         {
-            layer.PushLayer();
+            List<ILayer> newLayers = new List<ILayer>();
+            int lastNotEmpty = 0;
+            foreach (var layer in Layers)
+            {
+                if (layer.IsEmpty)
+                {
+                    newLayers.Add(layer);
+                }
+                else
+                {
+                    newLayers.Insert(lastNotEmpty++, layer);
+                }
+            }
+            Layers = newLayers;
+        }
+        //Update status & rename Layers
+        for (int i = 0; i < Layers.Count; i++)
+        {
+            LayerStatus newStatus = Layers[i].IsEmpty ? LayerStatus.Empty : LayerStatus.Hidden;
+            if (i == 0)
+                newStatus = LayerStatus.Front;
+            if (i == 1)
+                newStatus = LayerStatus.Back;
+
+            Layers[i].SetStatus(newStatus);
+            (Layers[i] as MonoBehaviour).name = $"Layer {i}";
         }
     }
 
-    private void PullLayers(int index = 0)
+    public void RemoveTopLayer()
     {
-        for (int i = index; i < Layers.Count; i++)
-        {
-            Layers[i].PullLayer();
-        }
-        foreach (var layer in Layers)
-        {
-            layer.PullLayer();
-        }
+
     }
+
     public void RemoveLayer(ILayer layer)
     {
         var index = Layers.IndexOf(layer);
         if (index != -1)
         {
             Layers.Remove(layer);
-            PullLayers(index);
         }
     }
     #endregion

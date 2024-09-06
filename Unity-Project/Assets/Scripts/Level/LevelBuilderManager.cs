@@ -34,6 +34,15 @@ public class LevelBuilderManager : MonoBehaviour, ILevelManager
     {
         containersMono.Remove(container);
     }
+
+    public void RearangeContainers()
+    {
+        Debug.Log("Rearranging containers layers. Putting empty layers behind.");
+        foreach (var container in containersMono)
+        {
+            container.RearangeLayers(true);
+        }
+    }
     #endregion
 
     #region SAVE & LOAD & RESET
@@ -41,6 +50,7 @@ public class LevelBuilderManager : MonoBehaviour, ILevelManager
     public void SaveLevel()
     {
         Debug.Log("Starting Saving");
+        RearangeContainers();
         AssetsManager.AddLevel(LevelModel);
     }
 

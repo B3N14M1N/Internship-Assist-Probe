@@ -18,7 +18,7 @@ public class AssetsManager
     public AssetsManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath)
     {
         // read current progress
-        Debug.Log(levelPaths);
+
         foreach (LevelResourcePathScriptableObject resource in Resources.LoadAll<LevelResourcePathScriptableObject>(levelPaths).ToArray())
         {
             kvpLevels.Add(resource.level, resource);
