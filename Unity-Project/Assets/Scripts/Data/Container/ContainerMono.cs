@@ -120,11 +120,6 @@ public class ContainerMono : MonoBehaviour, IContainer
         }
     }
 
-    public void RemoveTopLayer()
-    {
-
-    }
-
     public void RemoveLayer(ILayer layer)
     {
         var index = Layers.IndexOf(layer);

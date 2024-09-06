@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class SlotMono : MonoBehaviour, ISlot
@@ -72,9 +73,6 @@ public class SlotMono : MonoBehaviour, ISlot
     #endregion
 
     #region Methods
-
-    private ILayer previousLayer;
-    private IContainer previousContainer;
     private int previousRenderOrder;
     private Vector3 offset;
     private Vector3 DragPosition()
@@ -85,20 +83,40 @@ public class SlotMono : MonoBehaviour, ISlot
     }
     private void OnMouseDown()
     {
-        previousLayer = transform.GetComponentInParent<ILayer>();
-        previousContainer = (previousLayer as MonoBehaviour).transform.GetComponentInParent<IContainer>();
-        offset = transform.position - DragPosition();
-        previousRenderOrder = RenderOrder;
-        RenderOrder = 10;
+        if(ItemId != 0)
+        {
+            offset = transform.position - DragPosition();
+            previousRenderOrder = RenderOrder;
+            RenderOrder = 10;
+        }
     }
     private void OnMouseDrag()
     {
-        transform.position = DragPosition() + offset;
+        if(ItemId != 0)
+            transform.position = DragPosition() + offset;
     }
     private void OnMouseUp()
     {
-        transform.localPosition = slotPosition;
-        RenderOrder = previousRenderOrder;
+        if(ItemId != 0)
+        {
+            this.slotCollider.enabled = false;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+            if (hit.collider != null)
+            {
+                ISlot newSlot = hit.collider.GetComponent<ISlot>();
+                if (newSlot?.ItemId == 0)
+                {
+                    newSlot.LoadData(AssetsManager.GetGameItemData(ItemId));
+                    ClearSlot();
+                }
+            }
+
+            this.slotCollider.enabled = true;
+            transform.localPosition = this.SlotPosition;
+            RenderOrder = previousRenderOrder;
+        }
     }
 
     #endregion

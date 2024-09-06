@@ -11,18 +11,18 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     public string TimerName {  get; private set; }
     public bool Paused { get; private set; }
     public bool Started { get; private set; }
+    public bool Initialized {  get; private set; }
 
     private List<IContainer> containers = new List<IContainer>();
-
     public void Awake()
     {
         LoadLevel(0);
-        Paused = false;
-        Started = false;
     }
 
     public void LoadLevel(int level)
     {
+        Paused = false;
+        Started = false;
         var levelModel = AssetsManager.GetLevelModel(level);
         if (levelModel != null)
         {
@@ -34,6 +34,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             {
                 AddContainer(container);
             }
+            Initialized = true;
         }
     }
     public IContainer AddContainer(Container container)
@@ -48,48 +49,72 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     }
     public void ResetLevel()
     {
+        Initialized = false;
+        Started = false;
+        Paused = false;
+        Timer.RemoveTimer(TimerName);
         while (containers.Count > 0)
         {
             containers[0].RemoveContainer();
         }
+        LoadLevel(Level);
     }
 
-    public void StartGame()
+    public void StartLevel()
     {
-        Debug.Log($"Game Started. Level Time: {LevelTime}");
+        if (Initialized && !Started)
+        {
+            Debug.Log($"Level Started. Time: {LevelTime}");
 
-        if (Started)
-            EndGame();
-        Timer.StartTimer(TimerName, LevelTime);
-        LevelRemainingTime = Timer.GetTimer(TimerName);
-        Started = true;
+            if (Started)
+                EndLevel();
+            Timer.StartTimer(TimerName, LevelTime);
+            LevelRemainingTime = Timer.GetTimer(TimerName);
+            Started = true;
+        }
     }
 
-    public void EndGame()
+    public void EndLevel()
     {
-        Debug.Log($"Game Ended. Level Time remaining: {Timer.GetTimer(TimerName)}");
-
-        ResetLevel();
-        Timer.RemoveTimer(TimerName);
-        Started = false;
-        Paused = false;
+        if(Initialized && Started)
+        {
+            Debug.Log($"Level Ended. Time remaining: {Timer.GetTimer(TimerName)}");
+            Timer.RemoveTimer(TimerName);
+            Started = false;
+            Paused = false;
+            Initialized = false;
+        }
     }
 
-    public void PauseGame(bool pause)
+    public void PauseLevel(bool pause)
     {
-        Debug.Log($"Game Paused. Level Time remaining: {Timer.GetTimer(TimerName)}");
+        Debug.Log($"Level Paused. Time remaining: {Timer.GetTimer(TimerName)}");
 
         Paused = pause;
     }
     public void Update()
     {
-        if (Started && !Paused)
+        if (Initialized && Started && !Paused)
         {
             Timer.UpdateTimer(TimerName, Time.deltaTime);
             LevelRemainingTime = Timer.GetTimer(TimerName);
-            if (LevelRemainingTime == 0)
+
+            bool empty = true;
+
+            foreach(var container in containers)
             {
-                EndGame();
+
+                /// optimise this.. also remove all empty layers... KEEP ONLY 1 layer even if empty.
+                if (container.Layers?.Count > 0 && container.Layers[0].IsEmpty)
+                {
+                    container.RearangeLayers(true);
+                }
+                if (!container.IsEmpty)
+                    empty = false;
+            }
+            if (LevelRemainingTime == 0 || empty)
+            {
+                EndLevel();
             }
         }
     }

@@ -15,6 +15,11 @@ public class LevelPlayManagerEditor : Editor
         EditorGUIUtility.labelWidth = 100.0f;
         EditorGUILayout.IntField("Level: ", t.Level);
         EditorGUILayout.FloatField("Starting Time", t.LevelTime);
+        if(EditorGUILayout.Toggle("Initialized: ", t.Initialized))
+        {
+            EditorGUILayout.Toggle("Started: ", t.Started);
+            EditorGUILayout.Toggle("Paused: ", t.Paused);
+        }
         GUI.enabled = true;
         EditorGUIUtility.labelWidth = 0;
 
@@ -24,15 +29,22 @@ public class LevelPlayManagerEditor : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Start Game"))
         {
-            t.StartGame();
+            t.StartLevel();
         }
         if (GUILayout.Button("Pause Game"))
         {
-            t.PauseGame(!t.Paused);
+            t.PauseLevel(!t.Paused);
         }
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.Space(5);
+        EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("End Game"))
         {
-            t.EndGame();
+            t.EndLevel();
+        }
+        if (GUILayout.Button("RestartGame"))
+        {
+            t.ResetLevel();
         }
         EditorGUILayout.EndHorizontal();
         GUI.enabled = true;

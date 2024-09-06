@@ -40,7 +40,7 @@
                     ]
                 },
                 {
-                    "Status": 9,
+                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -62,7 +62,23 @@
                 "y": 7.489999771118164,
                 "z": 0.0
             },
-            "Layers": []
+            "Layers": [
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

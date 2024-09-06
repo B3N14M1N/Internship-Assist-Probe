@@ -20,7 +20,9 @@ public class LevelDataDisplayManager : MonoBehaviour
     public void Update()
     {
         TMP_Level.text = "Level: " + levelManager.Level;
-        TMP_Timer.text = $"Time: {(int)(levelManager.LevelRemainingTime / 60)}:{(int)(levelManager.LevelRemainingTime % 60)}";
+        string minutes = "" + (int)(levelManager.LevelRemainingTime / 60);
+        int seconds = (int)(levelManager.LevelRemainingTime % 60);
+        TMP_Timer.text = $"Time: {minutes}:{(seconds < 10 ? "0" + seconds : seconds)}";
         TMP_Combo.text = levelManager.Combo > 0 ? $"Combo x{levelManager.Combo}" : "";
         TMP_Stars.text = "" + levelManager.Stars;
     }
