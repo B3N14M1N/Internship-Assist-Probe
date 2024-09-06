@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LayerMono : MonoBehaviour
+public class LayerMono : MonoBehaviour, ILayer
 {
     #region FIELDS
 
@@ -8,79 +8,113 @@ public class LayerMono : MonoBehaviour
     private static readonly float SlotDistance = 6.5f;
     private static readonly Color backColor = new Color(130f / 256f, 130f / 256f, 130f / 256f, 1f);
     private static readonly Color frontColor = Color.white;
+    private static readonly int ThisClassMaxSlots = 3;
 
-    public int layerOrder;
-    public LayerStatus status;
+    public int LayerOrder {  get; set; }
+    public LayerStatus Status {  get; set; }
+    private int maxSlots;
+    public int MaxSlots 
+    { 
+        get
+        {
+            return maxSlots == 0 ? ThisClassMaxSlots : maxSlots;
+        }
+        private set
+        {
+            maxSlots = value > 0 ? value : ThisClassMaxSlots;
+        }
+    }
+    private ISlot[] slots;
+    public ISlot[] Slots 
+    {
+        get
+        {
+            return slots ??= new ISlot[MaxSlots];
+        }
+        set
+        {
+            if (slots != null)
+                ClearLayer();
+            slots = value;
+        }
+    }
 
-    public SlotMono Slot1;
-    public SlotMono Slot2;
-    public SlotMono Slot3;
+    public Layer Layer
+    {
+        get
+        {
+            var Slots = new Slot[MaxSlots];
+            for (int i = 0; i < MaxSlots; i++)
+            {
 
-    public bool IsFull => Slot1 != null && Slot2 != null && Slot3 != null;
-    public bool Combine => IsFull && Slot1.ItemId == Slot2.ItemId && Slot2.ItemId == Slot3.ItemId;
-    public Layer Layer => Layer.ToModel(this);
+                Slots[i] = this.Slots[i] == null ? Slot.Empty : this.Slots[i].Slot;
+            }
+            return new Layer()
+            {
+                LayerOrder = LayerOrder,
+                Status = Status,
+                MaxSlots = MaxSlots,
+                Slots = Slots
+            };
+        }
+        set
+        {
+            value ??= Layer.Empty;
+
+            LayerOrder = value.LayerOrder;
+            Status = value.Status;
+            MaxSlots = value.MaxSlots;
+            ClearLayer();
+            Slots = new ISlot[MaxSlots];
+
+            for (int i = 0; i < MaxSlots; i++)
+            {
+                Slots[i] = PrefabsInstanciatorFactory.InitializeNew(value.Slots?[i], transform);
+                (Slots[i] as MonoBehaviour).name = $"Slot {i}";
+            }
+            SetStatus(Status);
+        }
+    }
     #endregion
 
 
     #region CREATE & REMOVE LAYER
 
-    public static LayerMono InitializeNew(Layer layer, Transform parent)
-    {
-        if (layer == null)
-            return null;
-
-        var prefab = LevelManager.GetPrefab("Layer");
-        if (prefab == null)
-            return null;
-
-        var newLayer = Instantiate(prefab).GetComponent<LayerMono>();
-        newLayer.transform.parent = parent;
-
-        newLayer.layerOrder = layer.layerOrder;
-        newLayer.status = (LayerStatus)layer.status;
-
-
-        newLayer.Slot1 = SlotMono.InitializeNew(layer.Slot1, newLayer.transform);
-        newLayer.Slot1.name = "Slot 1";
-        newLayer.Slot2 = SlotMono.InitializeNew(layer.Slot2, newLayer.transform);
-        newLayer.Slot2.name = "Slot 2";
-        newLayer.Slot3 = SlotMono.InitializeNew(layer.Slot3, newLayer.transform);
-        newLayer.Slot3.name = "Slot 3";
-
-        newLayer.SetStatus((LayerStatus)layer.status);
-        return newLayer;
-    }
-
     public void RemoveLayer()
     {
-        if(Slot1 != null)
-        {
-            Slot1.RemoveSlot();
-            Slot1 = null;
-        }
-        if (Slot2 != null)
-        {
-            Slot2.RemoveSlot();
-            Slot2 = null;
-        }
-        if (Slot3 != null)
-        {
-            Slot3.RemoveSlot();
-            Slot3 = null;
-        }
+        ClearLayer();
 
-        transform.GetComponentInParent<ContainerMono>()?.RemoveLayer(this);
+        transform.GetComponentInParent<IContainer>()?.RemoveLayer(this);
         DestroyImmediate(gameObject);
+    }
+
+    public void ClearLayer()
+    {
+        for (int i = 0; i < MaxSlots && Slots != null; i++)
+        {
+            if (Slots[i] != null)
+            {
+                Slots[i].RemoveSlot();
+            }
+        }
     }
     #endregion
 
     #region LAYER EDITING
 
-    public void RemoveSlot(SlotMono slot)
+    public void RemoveSlot(ISlot slot)
     {
-        if (Slot1 == slot) Slot1 = null;
-        if (Slot2 == slot) Slot2 = null;
-        if (Slot3 == slot) Slot3 = null;
+        if(Slots != null)
+        {
+            for (int i = 0; i < MaxSlots; i++)
+            {
+                if (Slots[i] == slot)
+                {
+                    Slots[i] = null;
+                    break;
+                }
+            }
+        }
     }
 
     public int PullLayer()
@@ -95,51 +129,52 @@ public class LayerMono : MonoBehaviour
 
     private int MoveLayer(int direction)
     {
-        if (layerOrder > -1 && direction < 0 || direction > 0) //&& direction < 0) || (direction > 0 && layerOrder < 2))
-            layerOrder += direction;
+        if (LayerOrder > 0 && direction < 0 || direction > 0)
+            LayerOrder += direction;
 
-        var newStatus = status;
-        if (layerOrder > 1 && status != LayerStatus.hidden)
-            newStatus = LayerStatus.hidden;
-        if (layerOrder == 1 && status != LayerStatus.back)
-            newStatus = LayerStatus.back;
-        if (layerOrder == 0 && status != LayerStatus.front)
-            newStatus = LayerStatus.front;
+        var newStatus = Status;
+        if (LayerOrder > 1 && Status != LayerStatus.Hidden)
+            newStatus = LayerStatus.Hidden;
+        if (LayerOrder == 1 && Status != LayerStatus.Back)
+            newStatus = LayerStatus.Back;
+        if (LayerOrder == 0 && Status != LayerStatus.Front)
+            newStatus = LayerStatus.Front;
         SetStatus(newStatus);
 
-        return layerOrder;
+        return LayerOrder;
     }
     public void SetStatus(LayerStatus status)
     {
-        if (Slot1 != null)
-            Slot1.SlotPosition = new Vector3(-SlotDistance, 0f, 0f);
-        if (Slot2 != null)
-            Slot2.SlotPosition = new Vector3(0, 0f, 0f);
-        if (Slot3 != null)
-            Slot3.SlotPosition = new Vector3(SlotDistance, 0f, 0f);
-
-        this.status = status;
-        if (status == LayerStatus.front)
+        for(int i = 0; i < MaxSlots; i++)
+        {
+            if (Slots[i] != null)
+                Slots[i].SlotPosition = new Vector3((-MaxSlots / 2 + i) * SlotDistance, 0f, 0f);
+        }
+        Status = status;
+        if (status == LayerStatus.Front)
         {
             transform.localPosition = Vector3.zero;
 
-            Slot1?.SetStatus(true, true, -layerOrder, frontColor);
-            Slot2?.SetStatus(true, true, -layerOrder, frontColor);
-            Slot3?.SetStatus(true, true, -layerOrder, frontColor);
+            foreach(ISlot slot in Slots)
+            {
+                slot?.SetStatus(true, true, -LayerOrder, frontColor);
+            }
         }
-        if (status == LayerStatus.back)
+        if (status == LayerStatus.Back)
         {
             transform.localPosition = backroundLayerOffset;
 
-            Slot1?.SetStatus(true, false, -layerOrder, backColor);
-            Slot2?.SetStatus(true, false, -layerOrder, backColor);
-            Slot3?.SetStatus(true, false, -layerOrder, backColor);
+            foreach (ISlot slot in Slots)
+            {
+                slot?.SetStatus(true, false, -LayerOrder, backColor);
+            }
         }
-        if (status == LayerStatus.hidden)
+        if ((status & (LayerStatus.Hidden | LayerStatus.Empty)) != 0)
         {
-            Slot1?.SetStatus();
-            Slot2?.SetStatus();
-            Slot3?.SetStatus();
+            foreach (ISlot slot in Slots)
+            {
+                slot?.SetStatus();
+            }
         }
     }
     #endregion

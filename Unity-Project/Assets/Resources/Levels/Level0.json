@@ -1,111 +1,55 @@
 {
     "level": 0,
-    "LevelTime": 300.0,
+    "LevelTime": 500.0,
     "containers": [
         {
             "Position": {
-                "x": -15.0,
-                "y": 0.0,
+                "x": -14.600000381469727,
+                "y": -3.5,
                 "z": 0.0
             },
             "Layers": [
                 {
-                    "layerOrder": 0,
-                    "status": 1,
-                    "Slot1": {
-                        "gameItemId": 1
-                    },
-                    "Slot2": {
-                        "gameItemId": 1
-                    },
-                    "Slot3": {
-                        "gameItemId": 2
-                    }
+                    "LayerOrder": 0,
+                    "Status": 0,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 2
+                        },
+                        {
+                            "gameItemId": 2
+                        },
+                        {
+                            "gameItemId": 1
+                        }
+                    ]
                 },
                 {
-                    "layerOrder": 1,
-                    "status": 2,
-                    "Slot1": {
-                        "gameItemId": 2
-                    },
-                    "Slot2": {
-                        "gameItemId": 1
-                    },
-                    "Slot3": {
-                        "gameItemId": 2
-                    }
+                    "LayerOrder": 1,
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 2
+                        }
+                    ]
                 }
             ]
         },
         {
             "Position": {
-                "x": 0.0,
-                "y": 12.0,
+                "x": 13.399999618530274,
+                "y": 7.489999771118164,
                 "z": 0.0
             },
-            "Layers": [
-                {
-                    "layerOrder": 0,
-                    "status": 1,
-                    "Slot1": {
-                        "gameItemId": 3
-                    },
-                    "Slot2": {
-                        "gameItemId": 4
-                    },
-                    "Slot3": {
-                        "gameItemId": 5
-                    }
-                },
-                {
-                    "layerOrder": 1,
-                    "status": 2,
-                    "Slot1": {
-                        "gameItemId": 4
-                    },
-                    "Slot2": {
-                        "gameItemId": 3
-                    },
-                    "Slot3": {
-                        "gameItemId": 5
-                    }
-                },
-                {
-                    "layerOrder": 2,
-                    "status": 0,
-                    "Slot1": {
-                        "gameItemId": 5
-                    },
-                    "Slot2": {
-                        "gameItemId": 4
-                    },
-                    "Slot3": {
-                        "gameItemId": 3
-                    }
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 15.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "layerOrder": 0,
-                    "status": 0,
-                    "Slot1": {
-                        "gameItemId": 2
-                    },
-                    "Slot2": {
-                        "gameItemId": 5
-                    },
-                    "Slot3": {
-                        "gameItemId": 1
-                    }
-                }
-            ]
+            "Layers": []
         }
     ]
 }

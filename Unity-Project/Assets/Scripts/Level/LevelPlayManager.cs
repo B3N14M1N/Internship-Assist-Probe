@@ -12,17 +12,18 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     public bool Paused { get; private set; }
     public bool Started { get; private set; }
 
-    private List<ContainerMono> containersMono = new List<ContainerMono>();
+    private List<IContainer> containers = new List<IContainer>();
 
     public void Awake()
     {
-        LoadLevel(LevelManager.GetLevelModel(0));
+        LoadLevel(0);
         Paused = false;
         Started = false;
     }
 
-    public void LoadLevel(LevelModel levelModel)
+    public void LoadLevel(int level)
     {
+        var levelModel = AssetsManager.GetLevelModel(level);
         if (levelModel != null)
         {
             Debug.Log($"Loaded level: {levelModel.level}");
@@ -31,20 +32,25 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             TimerName = nameof(Level) + Level;
             foreach (Container container in levelModel.containers)
             {
-                ContainerMono newContainer = ContainerMono.InitializeNew(container, transform);
-                containersMono.Add(newContainer);
+                AddContainer(container);
             }
         }
     }
+    public IContainer AddContainer(Container container)
+    {
+        IContainer newContainer = PrefabsInstanciatorFactory.InitializeNew(container, transform);
+        containers.Add(newContainer);
+        return newContainer;
+    }
     public void RemoveContainer(ContainerMono container)
     {
-        containersMono.Remove(container);
+        containers.Remove(container);
     }
     public void ResetLevel()
     {
-        while (containersMono.Count > 0)
+        while (containers.Count > 0)
         {
-            containersMono[0].RemoveContainer();
+            containers[0].RemoveContainer();
         }
     }
 
@@ -86,11 +92,6 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
                 EndGame();
             }
         }
-    }
-
-    public void LoadLevel()
-    {
-        throw new System.NotImplementedException();
     }
 
 }

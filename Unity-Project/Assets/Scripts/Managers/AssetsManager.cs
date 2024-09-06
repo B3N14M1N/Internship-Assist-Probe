@@ -6,10 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using Zenject;
 
-public class LevelManager
+public class AssetsManager
 {
-    private int currentLevel;
-
     private static Dictionary<int, LevelResourcePathScriptableObject> kvpLevels = new Dictionary<int, LevelResourcePathScriptableObject>();
 
     private static Dictionary<int, GameItemScriptableObject> kvpSO = new Dictionary<int, GameItemScriptableObject>();
@@ -17,10 +15,10 @@ public class LevelManager
     private static Dictionary<string, GameObject> kvpPrefabs = new Dictionary<string, GameObject>();
 
     [Inject]
-    public LevelManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath)
+    public AssetsManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath)
     {
         // read current progress
-
+        Debug.Log(levelPaths);
         foreach (LevelResourcePathScriptableObject resource in Resources.LoadAll<LevelResourcePathScriptableObject>(levelPaths).ToArray())
         {
             kvpLevels.Add(resource.level, resource);
@@ -31,7 +29,7 @@ public class LevelManager
         {
             kvpSO.TryAdd(item.item.gameItemId, item);
         }
-        Debug.Log($"Loaded {kvpLevels.Count} items");
+        Debug.Log($"Loaded {kvpSO.Count} items");
 
 
         foreach(var prefab in Resources.LoadAll<GameObject>(PrefabsPath))

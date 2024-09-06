@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface ILevelManager
 {
-    void LoadLevel();
+    void LoadLevel(int level = 0);
+    IContainer AddContainer(Container container = null);
     void RemoveContainer(ContainerMono container);
 }

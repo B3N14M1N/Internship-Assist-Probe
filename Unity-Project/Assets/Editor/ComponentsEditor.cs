@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using Zenject;
 
 [CustomEditor(typeof(SlotMono))]
 public class SlotMonoEditor : Editor
@@ -20,7 +21,7 @@ public class SlotMonoEditor : Editor
             GUI.enabled = false;
         if (GUILayout.Button("Load Data"))
         {
-            t.LoadData(t.ItemId);
+            t.LoadData();
         }
         GUI.enabled = true;
 
@@ -31,6 +32,7 @@ public class SlotMonoEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 }
+
 [CustomEditor(typeof(LayerMono))]
 public class LayerMonoEditor : Editor
 {
@@ -41,94 +43,43 @@ public class LayerMonoEditor : Editor
         using (new EditorGUI.DisabledScope(true))
             EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((MonoBehaviour)target), GetType(), false);
 
-        t.layerOrder = EditorGUILayout.IntField("Layer Order: ", t.layerOrder);
-        t.status = (LayerStatus)EditorGUILayout.EnumPopup("Layer Status: ", t.status);
+        t.LayerOrder = EditorGUILayout.IntField("Layer Order: ", t.LayerOrder);
+        t.Status = (LayerStatus)EditorGUILayout.EnumPopup("Layer Status: ", t.Status);
         EditorGUILayout.Space(5);
 
         EditorGUIUtility.labelWidth = 45.0f;
-        EditorGUILayout.BeginHorizontal();
-        t.Slot1 = EditorGUILayout.ObjectField("Slot 1:", t.Slot1, typeof(SlotMono),true) as SlotMono;
-        if (GUILayout.Button("Add Slot"))
+        for (int i = 0; i < t.MaxSlots; ++i)
         {
-            if(t.Slot1 == null)
+            EditorGUILayout.BeginHorizontal();
+            t.Slots[i] = EditorGUILayout.ObjectField($"Slot {i}:", t.Slots[i] as MonoBehaviour, typeof(SlotMono), true) as SlotMono;
+            if (GUILayout.Button("Add Slot"))
             {
-                t.Slot1 = SlotMono.InitializeNew(new Slot(), t.transform, false);
-                t.Slot1.name = "Slot 1";
-            }
+                if (t.Slots[i] == null)
+                {
+                    t.Slots[i] = PrefabsInstanciatorFactory.InitializeNew(new Slot(), t.transform, false);
+                    (t.Slots[i] as MonoBehaviour).transform.name = $"Slot {i}";
+                    t.SetStatus(t.Status);
+                }
 
-        }
-        if (GUILayout.Button("Remove Slot"))
-        {
-            if (t.Slot1 != null)
-            {
-                t.Slot1.RemoveSlot();
             }
-        }
-        if (GUILayout.Button("Detach Slot"))
-        {
-            if (t.Slot1 != null)
+            if (GUILayout.Button("Clear Slot"))
             {
-                t.Slot1.transform.parent = null;
-                t.Slot1 = null;
+                if (t.Slots[i] != null)
+                {
+                    t.Slots[i].ClearSlot();
+                }
             }
+            if (GUILayout.Button("Detach Slot"))
+            {
+                if (t.Slots[i] != null)
+                {
+                    (t.Slots[i] as MonoBehaviour).transform.parent = null;
+                    t.Slots[i] = null;
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
-        EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.BeginHorizontal();
-        t.Slot2 = EditorGUILayout.ObjectField("Slot 2:", t.Slot2, typeof(SlotMono), true) as SlotMono;
-        if (GUILayout.Button("Add Slot"))
-        {
-            if (t.Slot2 == null)
-            {
-                t.Slot2 = SlotMono.InitializeNew(new Slot(), t.transform, false);
-                t.Slot2.name = "Slot 2";
-            }
-
-        }
-        if (GUILayout.Button("Remove Slot"))
-        {
-            if (t.Slot2 != null)
-            {
-                t.Slot2.RemoveSlot();
-            }
-        }
-        if (GUILayout.Button("Detach Slot"))
-        {
-            if (t.Slot2 != null)
-            {
-                t.Slot2.transform.parent = null;
-                t.Slot2 = null;
-            }
-        }
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        t.Slot3 = EditorGUILayout.ObjectField("Slot 1:", t.Slot3, typeof(SlotMono), true) as SlotMono;
-        if (GUILayout.Button("Add Slot"))
-        {
-            if (t.Slot3 == null)
-            {
-                t.Slot3 = SlotMono.InitializeNew(new Slot(), t.transform, false);
-                t.Slot3.name = "Slot 3";
-            }
-
-        }
-        if (GUILayout.Button("Remove Slot"))
-        {
-            if (t.Slot3 != null)
-            {
-                t.Slot3.RemoveSlot();
-            }
-        }
-        if (GUILayout.Button("Detach Slot"))
-        {
-            if (t.Slot3 != null)
-            {
-                t.Slot3.transform.parent = null;
-                t.Slot3 = null;
-            }
-        }
-        EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(5);
 
         EditorGUILayout.BeginHorizontal();

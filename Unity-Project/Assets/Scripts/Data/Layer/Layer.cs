@@ -5,30 +5,36 @@ using UnityEngine;
 [SerializeField]
 public enum LayerStatus
 {
-    hidden = 0,
-    front = 1,
-    back = 2,
+    Empty = 1,
+    Front = 2,
+    Back = 4,
+    Hidden = 8,
 }
 
 [Serializable]
 public class Layer
 {
-    public int layerOrder;
-    public int status;
-    public Slot Slot1;
-    public Slot Slot2;
-    public Slot Slot3;
+    public int LayerOrder;
+    public LayerStatus Status;
+    public int MaxSlots;
+    public Slot[] Slots;
 
-    public static Layer ToModel(LayerMono layerMono)
-    {
-        //Debug.Log("Converting LayerMono to Layer");
-        return new Layer()
-        {
-            layerOrder = layerMono.layerOrder,
-            status = (int)layerMono.status,
-            Slot1 = layerMono.Slot1 == null ? Slot.Empty : layerMono.Slot1.Slot,
-            Slot2 = layerMono.Slot2 == null ? Slot.Empty : layerMono.Slot2.Slot,
-            Slot3 = layerMono.Slot3 == null ? Slot.Empty : layerMono.Slot3.Slot,
-        };
-    }
+    public static Layer Empty => new Layer();
+}
+
+public interface ILayer
+{
+    void SetStatus(LayerStatus status);
+    Layer Layer { get; set; }
+    int LayerOrder { get; set; }
+    LayerStatus Status { get; set; }
+    int MaxSlots { get; }
+    ISlot[] Slots {  get; set; }
+
+    void RemoveLayer();
+    void ClearLayer();
+    void RemoveSlot(ISlot slot);
+
+    int PullLayer();
+    int PushLayer();
 }

@@ -8,6 +8,7 @@ public class LevelBuilderManagerEditor : Editor
     {
         LevelBuilderManager t = (LevelBuilderManager)target;
         DrawDefaultInspector();
+        EditorGUILayout.Space(5);
         if (GUILayout.Button("Add Container"))
         {
             t.AddContainer();
@@ -23,7 +24,7 @@ public class LevelBuilderManagerEditor : Editor
         }
         if (GUILayout.Button("Load"))
         {
-            t.LoadLevel();
+            t.LoadLevel(t.Level);
         }
         EditorGUILayout.EndHorizontal();
 

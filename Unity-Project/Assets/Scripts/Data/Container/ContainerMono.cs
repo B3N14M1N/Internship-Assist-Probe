@@ -3,78 +3,102 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ContainerMono : MonoBehaviour
+public class ContainerMono : MonoBehaviour, IContainer
 {
     #region FIELDS
+    public List<ILayer> Layers { get; set; }
+    public Container Container
+    {
+        get
+        {
+            var container = new Container()
+            {
+                Position = transform.localPosition,
+                Layers = new List<Layer>()
+            };
 
-    public List<LayerMono> layers = new List<LayerMono>();
-    public LayerMono ActiveLayer => layers[0];
-    public Container Container => Container.ToModel(this);
+            foreach (var layer in Layers)
+            {
+                container.Layers.Add(layer.Layer);
+            }
+            return container;
+        }
+        set
+        {
+            value ??= Container.Empty;
+            ClearContainer();
+            Layers = new List<ILayer>();
+            foreach (Layer layer in value.Layers)
+            {
+                ILayer layerMono = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
+                (layerMono as MonoBehaviour).name = "Layer " + layer.LayerOrder;
+                Layers.Insert(0, layerMono);
+            }
+
+        }
+    }
+
+    public bool IsEmpty
+    {
+        get
+        {
+            if (Layers == null)
+                return false;
+            foreach(var layer in Layers)
+            {
+                if ((layer.Status & LayerStatus.Empty) == 0)
+                    return false;
+            }
+            return true;
+        }
+    }
     #endregion
 
 
     #region CREATE & REMOVE CONTAINER
 
-    public static ContainerMono InitializeNew(Container container, Transform parent)
-    {
-        if (container == null)
-            return null;
-
-        var prefab = LevelManager.GetPrefab("Container");
-
-        if (prefab == null)
-            return null;
-
-        var newContainer = Instantiate(prefab).GetComponent<ContainerMono>();
-        newContainer.transform.parent = parent;
-        newContainer.transform.localPosition = container.Position;
-
-        foreach (Layer layer in container.Layers)
-        {
-            LayerMono layerMono = LayerMono.InitializeNew(layer, newContainer.transform);
-            layerMono.name = "Layer " + layer.layerOrder;
-            newContainer.layers.Insert(0, layerMono);
-        }
-        return newContainer;
-    }
     public void RemoveContainer()
     {
-        while (layers.Count > 0)
-        {
-            layers[0].RemoveLayer();
-        }
-
+        ClearContainer();
         transform.GetComponentInParent<ILevelManager>()?.RemoveContainer(this);
 
         DestroyImmediate(gameObject);
+    }
+
+    public void ClearContainer()
+    {
+        if (Layers != null)
+        {
+            while (Layers.Count > 0)
+            {
+                Layers[0].RemoveLayer();
+            }
+        }
     }
     #endregion
 
     #region ADD & REMOVE LAYER
 
-    public LayerMono AddLayer()
-    {
-        return AddLayer(new Layer());
-    }
 
-    public LayerMono AddLayer(Layer layer)
+    public ILayer AddLayer(Layer layer = null)
     {
-        var newLayer = LayerMono.InitializeNew(layer, transform);
+        layer ??= new Layer(); 
+        var newLayer = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
         PushLayers();
-        layers.Insert(0, newLayer);
+        Layers.Insert(0, newLayer);
 
         return newLayer;
     }
 
     public void RearangeLayers()
     {
-        List<LayerMono> newLayers = new List<LayerMono>();
+        List<ILayer> newLayers = new List<ILayer>();
 
     }
 
     private void PushLayers(int index = 0)
     {
-        foreach (var layer in layers)
+        foreach (var layer in Layers)
         {
             layer.PushLayer();
         }
@@ -82,21 +106,21 @@ public class ContainerMono : MonoBehaviour
 
     private void PullLayers(int index = 0)
     {
-        for (int i = index; i < layers.Count; i++)
+        for (int i = index; i < Layers.Count; i++)
         {
-            layers[i].PullLayer();
+            Layers[i].PullLayer();
         }
-        foreach (var layer in layers)
+        foreach (var layer in Layers)
         {
             layer.PullLayer();
         }
     }
-    public void RemoveLayer(LayerMono layer)
+    public void RemoveLayer(ILayer layer)
     {
-        var index = layers.IndexOf(layer);
+        var index = Layers.IndexOf(layer);
         if (index != -1)
         {
-            layers.Remove(layer);
+            Layers.Remove(layer);
             PullLayers(index);
         }
     }

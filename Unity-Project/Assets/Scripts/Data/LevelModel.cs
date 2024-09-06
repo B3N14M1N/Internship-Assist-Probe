@@ -9,7 +9,7 @@ public class LevelModel
     public float LevelTime;
     public List<Container> containers;
 
-    public static LevelModel ToModel(List<ContainerMono> containersMono, int level, float LevelTime)
+    public static LevelModel ToModel(List<IContainer> containersMono, int level, float LevelTime)
     {
         Debug.Log("Converting Level to LevelModel");
         var model = new LevelModel();

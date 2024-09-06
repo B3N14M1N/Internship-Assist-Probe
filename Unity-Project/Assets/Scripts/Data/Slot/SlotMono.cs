@@ -1,9 +1,8 @@
-using JetBrains.Annotations;
 using System;
 using UnityEngine;
 
 [Serializable]
-public class SlotMono : MonoBehaviour
+public class SlotMono : MonoBehaviour, ISlot
 {
     #region FIELDS
 
@@ -18,51 +17,48 @@ public class SlotMono : MonoBehaviour
     public bool Render { set { gameObject.SetActive(value); } get { return gameObject.activeSelf; } }
     public int RenderOrder { get { return spriteRenderer.sortingOrder; } set { spriteRenderer.sortingOrder = value; } }
     public Color RenderColor { set { spriteRenderer.color = value; } }
-    public Slot Slot => Slot.ToModel(this);
+    public Slot Slot 
+    { 
+        get {
+            return new Slot()
+            {
+                gameItemId = ItemId
+            };
+        }
+        set
+        {
+            value ??= Slot.Empty;
+            ItemId = value.gameItemId;
+            LoadData(AssetsManager.GetGameItemData(ItemId));
+        }
+    }
     #endregion
 
     #region CREATE & LOAD & REMOVE
 
-    public static SlotMono InitializeNew(Slot slot, Transform parent, bool Load = true)
-    {
-        if (slot == null)
-            return null;
-
-        var prefab = LevelManager.GetPrefab("Slot");
-        if (prefab == null)
-            return null;
-
-        SlotMono newSlot = Instantiate(prefab).GetComponent<SlotMono>();
-        newSlot.ItemId = slot.gameItemId;
-        if(Load)
-            newSlot.LoadData();
-
-        if (parent != null)
-            newSlot.transform.parent = parent;
-
-        return newSlot;
-    }
-
-    public void RemoveSlot()
-    {
-        transform.parent.GetComponent<LayerMono>()?.RemoveSlot(this);
-        DestroyImmediate(gameObject);
-    }
-
     public void LoadData()
     {
-        LoadData(ItemId);
+        LoadData(AssetsManager.GetGameItemData(ItemId));
     }
 
-    public void LoadData(int itemGameDataId)
+    public void LoadData(GameItemData data)
     {
-        // get GameItemData from manager and load the sprite;
-        var data = LevelManager.GetGameItemData(itemGameDataId);
         data ??= new GameItemData();
 
         spriteRenderer.sprite = data.sprite;
         spriteRenderer.transform.localPosition = data.position;
         spriteRenderer.transform.localScale = data.scale;
+    }
+
+    public void RemoveSlot()
+    {
+        transform.GetComponentInParent<ILayer>()?.RemoveSlot(this);
+        DestroyImmediate(gameObject);
+    }
+
+    public void ClearSlot()
+    {
+        LoadData(null);
     }
 
     public void SetStatus(bool render = false, bool draggable = false, int renderOrder = 0, Color? renderColor = null)
@@ -76,8 +72,8 @@ public class SlotMono : MonoBehaviour
 
     #region Methods
 
-    private LayerMono previousLayer;
-    private ContainerMono previousContainer;
+    private ILayer previousLayer;
+    private IContainer previousContainer;
     private int previousRenderOrder;
     private Vector3 offset;
     private Vector3 DragPosition()
@@ -88,8 +84,8 @@ public class SlotMono : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        previousLayer = transform.GetComponentInParent<LayerMono>();
-        previousContainer = previousLayer.transform.GetComponentInParent<ContainerMono>();
+        previousLayer = transform.GetComponentInParent<ILayer>();
+        previousContainer = (previousLayer as MonoBehaviour).transform.GetComponentInParent<IContainer>();
         offset = transform.position - DragPosition();
         previousRenderOrder = RenderOrder;
         RenderOrder = 10;
@@ -103,5 +99,6 @@ public class SlotMono : MonoBehaviour
         transform.localPosition = slotPosition;
         RenderOrder = previousRenderOrder;
     }
+
     #endregion
 }

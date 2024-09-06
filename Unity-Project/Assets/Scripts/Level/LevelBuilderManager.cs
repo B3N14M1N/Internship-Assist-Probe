@@ -12,7 +12,7 @@ public class LevelBuilderManager : MonoBehaviour, ILevelManager
 
     public int Level;
     public float LevelTime;
-    public List<ContainerMono> containersMono = new List<ContainerMono>();
+    public List<IContainer> containersMono = new List<IContainer>();
     
     private LevelModel LevelModel => LevelModel.ToModel(containersMono, Level, LevelTime);
 
@@ -20,13 +20,13 @@ public class LevelBuilderManager : MonoBehaviour, ILevelManager
 
     #region ADD & REMOVE CONTAINERS
 
-    public ContainerMono AddContainer()
+    public IContainer AddContainer()
     {
         return AddContainer(new Container());
     }
-    public ContainerMono AddContainer(Container container)
+    public IContainer AddContainer(Container container)
     {
-        ContainerMono newContainer = ContainerMono.InitializeNew(container, transform);
+        IContainer newContainer = PrefabsInstanciatorFactory.InitializeNew(container, transform);
         containersMono.Add(newContainer);
         return newContainer;
     }
@@ -41,12 +41,12 @@ public class LevelBuilderManager : MonoBehaviour, ILevelManager
     public void SaveLevel()
     {
         Debug.Log("Starting Saving");
-        LevelManager.AddLevel(LevelModel);
+        AssetsManager.AddLevel(LevelModel);
     }
 
-    public void LoadLevel()
+    public void LoadLevel(int level)
     {
-        var levelModel = LevelManager.GetLevelModel(Level);
+        var levelModel = AssetsManager.GetLevelModel(level);
         if (levelModel != null)
         {
             ResetLevel();

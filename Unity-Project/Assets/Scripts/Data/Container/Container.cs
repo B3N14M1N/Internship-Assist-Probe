@@ -8,19 +8,17 @@ public class Container
     public Vector3 Position;
     public List<Layer> Layers = new List<Layer>();
 
-    public static Container ToModel(ContainerMono containerMono)
-    {
-        //Debug.Log("Converting ContainerMono to Container");
-        var container = new Container() 
-        {
-            Position = containerMono.transform.localPosition,
-            Layers = new List<Layer>()
-        };
+    public static Container Empty => new Container();
+}
 
-        foreach (var layer in containerMono.layers)
-        {
-            container.Layers.Add(layer.Layer);
-        }
-        return container;
-    }
+public interface IContainer
+{
+    List<ILayer> Layers { get; set; }
+    Container Container { get; set; }
+
+    bool IsEmpty { get; }
+    void RemoveContainer();
+    void ClearContainer();
+    ILayer AddLayer(Layer layer = null);
+    void RemoveLayer(ILayer layer = null);
 }
