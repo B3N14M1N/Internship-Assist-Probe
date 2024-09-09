@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9e2ef551a5da8448be5268993cff02, type: 3}
+  m_Name: CombineEffects
+  m_EditorClassIdentifier: 
+  Identificator: Combine
+  ParticleMaterial: {fileID: 2100000, guid: 28f6baf6b39e64b41b92c455a1089318, type: 2}
+  StartAnimation: {fileID: 0}
+  ParticlesPrefab: {fileID: 3626957461172672590, guid: fa1eab54e0475a1458be68504200d4e3, type: 3}

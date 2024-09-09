@@ -1,3 +1,5 @@
+using GameItemHolders;
+
 public interface ILevelManager
 {
     void LoadLevel(int level = 0);

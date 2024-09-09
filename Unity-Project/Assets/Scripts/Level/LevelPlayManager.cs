@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GameItemHolders;
+
 public class LevelPlayManager : MonoBehaviour, ILevelManager
 {
     public int Level { get; private set; }
@@ -11,7 +13,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     public string TimerName {  get; private set; }
     public bool Paused { get; private set; }
     public bool Started { get; private set; }
-    public bool Initialized {  get; private set; }
+    public bool Initialized { get; private set; }
 
     private List<IContainer> containers = new List<IContainer>();
     public void Awake()
@@ -29,6 +31,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             Debug.Log($"Loaded level: {levelModel.level}");
             Level = levelModel.level;
             LevelTime = levelModel.LevelTime;
+            LevelRemainingTime = levelModel.LevelTime;
             TimerName = nameof(Level) + Level;
             foreach (Container container in levelModel.containers)
             {
@@ -52,6 +55,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
         Initialized = false;
         Started = false;
         Paused = false;
+        GameEventsManager.Instance.Paused = Paused;
         Timer.RemoveTimer(TimerName);
         while (containers.Count > 0)
         {
@@ -83,36 +87,36 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             Started = false;
             Paused = false;
             Initialized = false;
+            GameEventsManager.Instance.Paused = Paused;
         }
     }
 
     public void PauseLevel(bool pause)
     {
         Debug.Log($"Level Paused. Time remaining: {Timer.GetTimer(TimerName)}");
-
         Paused = pause;
+        GameEventsManager.Instance.Paused = Paused;
     }
     public void Update()
     {
+        if (Initialized && !Started && GameEventsManager.Instance.SlotSelected)
+        {
+            StartLevel();
+        }
+
         if (Initialized && Started && !Paused)
         {
             Timer.UpdateTimer(TimerName, Time.deltaTime);
             LevelRemainingTime = Timer.GetTimer(TimerName);
 
             bool empty = true;
-
             foreach(var container in containers)
             {
-
-                /// optimise this.. also remove all empty layers... KEEP ONLY 1 layer even if empty.
-                if (container.Layers?.Count > 0 && container.Layers[0].IsEmpty)
-                {
-                    container.RearangeLayers(true);
-                }
                 if (!container.IsEmpty)
                     empty = false;
             }
-            if (LevelRemainingTime == 0 || empty)
+
+            if (LevelRemainingTime <= 0 || empty)
             {
                 EndLevel();
             }

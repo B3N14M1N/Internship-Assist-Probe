@@ -10,7 +10,7 @@
             },
             "Layers": [
                 {
-                    "Status": 2,
+                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -21,26 +21,26 @@
                         },
                         {
                             "gameItemId": 1
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 2
                         }
                     ]
                 },
                 {
                     "Status": 4,
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 1
-                        },
-                        {
-                            "gameItemId": 1
-                        },
-                        {
-                            "gameItemId": 2
-                        }
-                    ]
-                },
-                {
-                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -64,7 +64,31 @@
             },
             "Layers": [
                 {
-                    "Status": 2,
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 10.399999618530274,
+                "y": -11.5,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {

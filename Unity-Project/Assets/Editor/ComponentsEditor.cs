@@ -1,7 +1,8 @@
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using Zenject;
+
+using GameItemHolders;
 
 [CustomEditor(typeof(SlotMono))]
 public class SlotMonoEditor : Editor

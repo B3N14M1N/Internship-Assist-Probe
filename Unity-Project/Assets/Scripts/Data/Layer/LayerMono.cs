@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using GameItemHolders;
+
 public class LayerMono : MonoBehaviour, ILayer
 {
     #region FIELDS
@@ -81,9 +83,29 @@ public class LayerMono : MonoBehaviour, ILayer
         { 
             if (slots == null)
                 return true;
-            foreach (var slot in this.slots)
+            foreach (var slot in slots)
             {
                 if (slot?.ItemId != 0)
+                    return false;
+            }
+            return true;
+        }
+    }
+    public bool IsCombinable
+    {
+        get
+        {
+            if (slots == null)
+                return false;
+            if (slots[0] == null)
+                return false;
+
+            var id = slots[0].ItemId;
+            foreach (var slot in slots)
+            {
+                if (slot == null)
+                    return false;
+                if (slot.ItemId != id)
                     return false;
             }
             return true;
@@ -102,11 +124,14 @@ public class LayerMono : MonoBehaviour, ILayer
         DestroyImmediate(gameObject);
     }
 
-    public void ClearLayer()
+    public void ClearLayer(bool removeSlots = true)
     {
         for (int i = 0; i < MaxSlots && Slots != null; i++)
         {
-            Slots[i]?.RemoveSlot();
+            if (removeSlots)
+                Slots[i]?.RemoveSlot();
+            else
+                Slots[i]?.ClearSlot();
         }
     }
     #endregion
@@ -137,7 +162,7 @@ public class LayerMono : MonoBehaviour, ILayer
                 Slots[i].SlotPosition = new Vector3((-MaxSlots / 2 + i) * SlotDistance, 0f, 0f);
         }
 
-        if ((status & (LayerStatus.Hidden | LayerStatus.Empty)) != 0)
+        if ((status & LayerStatus.Hidden) != 0)
         {
             foreach (ISlot slot in Slots)
             {

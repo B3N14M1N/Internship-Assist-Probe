@@ -1,14 +1,23 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+using GameItemHolders;
 
 [Serializable]
 public class SlotMono : MonoBehaviour, ISlot
 {
     #region FIELDS
 
-    public CircleCollider2D slotCollider;
-    public SpriteRenderer spriteRenderer;
+    private BoxCollider2D slotCollider;
+    //public CircleCollider2D slotCollider;
+    private SpriteRenderer spriteRenderer;
+
+    public void Awake()
+    {
+        slotCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private Vector3 slotPosition;
     
@@ -73,8 +82,9 @@ public class SlotMono : MonoBehaviour, ISlot
     #endregion
 
     #region Methods
-    private int previousRenderOrder;
+    //private int previousRenderOrder;
     private Vector3 offset;
+    private int previousLayer;
     private Vector3 DragPosition()
     {
         var mousePos = Input.mousePosition;
@@ -83,41 +93,62 @@ public class SlotMono : MonoBehaviour, ISlot
     }
     private void OnMouseDown()
     {
-        if(ItemId != 0)
+        bool ok = GameEventsManager.Instance != null ?
+            !GameEventsManager.Instance.SlotSelected && !GameEventsManager.Instance.Paused
+            : true;
+        if (ItemId != 0 && ok)
         {
             offset = transform.position - DragPosition();
-            previousRenderOrder = RenderOrder;
-            RenderOrder = 10;
+            //previousRenderOrder = RenderOrder;
+            RenderOrder = 3001;
+            previousLayer = spriteRenderer.gameObject.layer;
+            spriteRenderer.gameObject.layer = 6; // TOP LAYER RENDER
+            GameEventsManager.Instance?.SelectedSlot(this);
         }
     }
+
     private void OnMouseDrag()
     {
-        if(ItemId != 0)
+        bool ok = GameEventsManager.Instance != null ? !GameEventsManager.Instance.Paused: true;
+        if (ItemId != 0 && ok)
+        {
             transform.position = DragPosition() + offset;
+        }
     }
+
     private void OnMouseUp()
     {
-        if(ItemId != 0)
+        bool ok = GameEventsManager.Instance != null ? !GameEventsManager.Instance.Paused : true;
+        if (ItemId != 0 && ok)
         {
-            this.slotCollider.enabled = false;
+            slotCollider.enabled = false;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+            slotCollider.enabled = true;
+            //RenderOrder = previousRenderOrder;
+            spriteRenderer.gameObject.layer = previousLayer;
             if (hit.collider != null)
             {
-                ISlot newSlot = hit.collider.GetComponent<ISlot>();
-                if (newSlot?.ItemId == 0)
+                ISlot hitSlot = hit.collider.GetComponent<ISlot>();
+                if (hitSlot?.ItemId == 0)
                 {
-                    newSlot.LoadData(AssetsManager.GetGameItemData(ItemId));
+                    hitSlot.LoadData(AssetsManager.GetGameItemData(ItemId));
                     ClearSlot();
+                    GameEventsManager.Instance?.ChangedSlots(hitSlot, this);
                 }
             }
 
-            this.slotCollider.enabled = true;
+
+            // if instant return wanted uncomment this section
+            /*
+            GameEventsManager.Instance?.UnselectedSlot(null);
             transform.localPosition = this.SlotPosition;
-            RenderOrder = previousRenderOrder;
+            */
+            // and comment this section
+            if (this != null)
+                GameEventsManager.Instance?.UnselectedSlot(this);
         }
     }
-
     #endregion
 }

@@ -78,3 +78,4 @@ MonoBehaviour:
   progressDataPath: nothing
   ItemsPath: GameItems
   PrefabsPath: Prefabs
+  EffectsPath: EffectsScriptableObjects

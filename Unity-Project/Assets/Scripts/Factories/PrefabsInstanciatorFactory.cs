@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using GameItemHolders;
+
 public class PrefabsInstanciatorFactory : MonoBehaviour
 {
     public static ISlot InitializeNew(Slot slot = null, Transform parent = null,  bool loadData = true)

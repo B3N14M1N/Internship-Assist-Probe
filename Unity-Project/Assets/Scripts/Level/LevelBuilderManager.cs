@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using GameItemHolders;
+
 public class LevelBuilderManager : MonoBehaviour, ILevelManager
 {
     public void Start()

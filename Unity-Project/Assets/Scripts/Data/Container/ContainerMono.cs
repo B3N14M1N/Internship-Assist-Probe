@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
+using GameItemHolders;
+
+    [Serializable]
 public class ContainerMono : MonoBehaviour, IContainer
 {
     #region FIELDS
@@ -42,10 +44,10 @@ public class ContainerMono : MonoBehaviour, IContainer
         get
         {
             if (Layers == null)
-                return false;
+                return true;
             foreach(var layer in Layers)
             {
-                if ((layer.Status & LayerStatus.Empty) == 0)
+                if (!layer.IsEmpty)
                     return false;
             }
             return true;
@@ -55,11 +57,19 @@ public class ContainerMono : MonoBehaviour, IContainer
 
 
     #region CLEAR & REMOVE CONTAINER
-    public void ClearContainer()
+    public void ClearContainer(bool keepTopLayer = false, bool clearOnlyEmpty = false)
     {
-        while (Layers?.Count > 0)
+        if (Layers != null)
         {
-            Layers[0].RemoveLayer();
+            for (int i = (keepTopLayer ? 1 : 0); i < Layers.Count; i++)
+            {
+                if (Layers[i] != null && 
+                    (!clearOnlyEmpty || (clearOnlyEmpty && Layers[i].IsEmpty)))
+                {
+                    Layers[i].RemoveLayer();
+                    i--;
+                }
+            }
         }
     }
 
@@ -81,7 +91,7 @@ public class ContainerMono : MonoBehaviour, IContainer
         layer ??= new Layer(); 
         var newLayer = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
         (newLayer as MonoBehaviour).name = $"Layer {Layers.Count}";
-        newLayer.SetStatus(LayerStatus.Empty);
+        newLayer.SetStatus(LayerStatus.Hidden);
         Layers.Add(newLayer);
 
         return newLayer;
@@ -109,7 +119,7 @@ public class ContainerMono : MonoBehaviour, IContainer
         //Update status & rename Layers
         for (int i = 0; i < Layers.Count; i++)
         {
-            LayerStatus newStatus = Layers[i].IsEmpty ? LayerStatus.Empty : LayerStatus.Hidden;
+            LayerStatus newStatus = LayerStatus.Hidden;
             if (i == 0)
                 newStatus = LayerStatus.Front;
             if (i == 1)

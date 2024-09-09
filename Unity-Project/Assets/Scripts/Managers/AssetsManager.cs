@@ -14,8 +14,10 @@ public class AssetsManager
 
     private static Dictionary<string, GameObject> kvpPrefabs = new Dictionary<string, GameObject>();
 
+    private static Dictionary<string, EffectsAndAnimationsScriptableObject> kvpEffects = new Dictionary<string, EffectsAndAnimationsScriptableObject>();
+
     [Inject]
-    public AssetsManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath)
+    public AssetsManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath, string EffectsPath)
     {
         // read current progress
 
@@ -37,6 +39,13 @@ public class AssetsManager
             kvpPrefabs.TryAdd(prefab.name, prefab);
         }
         Debug.Log($"Loaded {kvpPrefabs.Count} prefabs");
+
+
+        foreach (var effect in Resources.LoadAll<EffectsAndAnimationsScriptableObject>(EffectsPath))
+        {
+            kvpEffects.TryAdd(effect.Identificator, effect);
+        }
+        Debug.Log($"Loaded {kvpEffects.Count} effects");
     }
 
     public static void AddLevel(LevelModel levelModel)
@@ -72,6 +81,7 @@ public class AssetsManager
         Debug.Log($"Level {level} not found.");
         return null;
     }
+
     public static GameItemData GetGameItemData(int gameItemId)
     {
         if (kvpSO.TryGetValue(gameItemId, out GameItemScriptableObject value))
@@ -81,6 +91,7 @@ public class AssetsManager
         Debug.Log($"Game Item with ID: {gameItemId} not found");
         return null;
     }
+
     public static GameObject GetPrefab(string prefabName)
     {
         if (kvpPrefabs.TryGetValue(prefabName, out GameObject value))
@@ -88,6 +99,16 @@ public class AssetsManager
             return value;
         }
         Debug.Log($"Prefab with name: {prefabName} not found");
+        return null;
+    }
+
+    public static EffectsAndAnimationsScriptableObject GetEffects(string identificator)
+    {
+        if (kvpEffects.TryGetValue(identificator, out EffectsAndAnimationsScriptableObject value))
+        {
+            return value;
+        }
+        Debug.Log($"Effects with identificator: {identificator} not found");
         return null;
     }
 }

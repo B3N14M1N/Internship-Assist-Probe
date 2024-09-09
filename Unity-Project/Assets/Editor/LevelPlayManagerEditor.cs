@@ -42,7 +42,7 @@ public class LevelPlayManagerEditor : Editor
         {
             t.EndLevel();
         }
-        if (GUILayout.Button("RestartGame"))
+        if (GUILayout.Button("Restart Game"))
         {
             t.ResetLevel();
         }
