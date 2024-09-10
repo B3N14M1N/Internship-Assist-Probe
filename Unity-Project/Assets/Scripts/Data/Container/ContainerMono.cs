@@ -53,6 +53,20 @@ public class ContainerMono : MonoBehaviour, IContainer
             return true;
         }
     }
+    public bool IsFull
+    {
+        get
+        {
+            if (Layers == null)
+                return true;
+            foreach (var layer in Layers)
+            {
+                if (!layer.IsFull)
+                    return false;
+            }
+            return true;
+        }
+    }
     #endregion
 
 

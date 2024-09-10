@@ -19,6 +19,7 @@ namespace GameItemHolders
         Container Container { get; set; }
 
         bool IsEmpty { get; }
+        bool IsFull { get; }
         void RemoveContainer();
         void ClearContainer(bool keepTopLayer = false, bool clearOnlyEmpty = false);
         ILayer AddLayer(Layer layer = null);

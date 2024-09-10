@@ -1,0 +1,696 @@
+{
+    "level": 1,
+    "LevelTime": 180.0,
+    "containers": [
+        {
+            "Position": {
+                "x": -18.0,
+                "y": 20.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 6
+                        },
+                        {
+                            "gameItemId": 5
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 10
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": -18.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": -18.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 3
+                        },
+                        {
+                            "gameItemId": 3
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 4
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 4
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 25.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 3
+                        },
+                        {
+                            "gameItemId": 5
+                        },
+                        {
+                            "gameItemId": 5
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 7
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 7
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 15.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 6
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 7
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 5.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 6
+                        },
+                        {
+                            "gameItemId": 2
+                        },
+                        {
+                            "gameItemId": 2
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 4
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": -5.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 9
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 9
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 10
+                        },
+                        {
+                            "gameItemId": 10
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 18.0,
+                "y": 20.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 1
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 8
+                        },
+                        {
+                            "gameItemId": 8
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 18.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 1
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 2
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 18.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "Status": 1,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 8
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 9
+                        }
+                    ]
+                },
+                {
+                    "Status": 2,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "Status": 4,
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

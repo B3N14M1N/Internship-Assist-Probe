@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 using GameItemHolders;
-using System.Collections.Generic;
 
 public class GameEventsManager : MonoBehaviour
 {

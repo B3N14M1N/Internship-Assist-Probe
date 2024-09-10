@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameItemHolders;
+using UnityEngine.SceneManagement;
 
 public class LevelPlayManager : MonoBehaviour, ILevelManager
 {
@@ -10,21 +11,31 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     public float LevelRemainingTime { get; private set; }
     public int Stars { get; private set; }
     public int Combo { get; private set; }
+    public float ComboTimer { get; private set; }
     public string TimerName {  get; private set; }
     public bool Paused { get; private set; }
     public bool Started { get; private set; }
+    public bool Lost { get; private set; }
+    public bool Won { get; private set; }
     public bool Initialized { get; private set; }
+
+    private GameProgress progress;
 
     private List<IContainer> containers = new List<IContainer>();
     public void Awake()
     {
-        LoadLevel(0);
+        progress = GameProgress.LoadProgress();
+        Level = progress.CurrentLevel;
+        LoadLevel(Level);
     }
 
     public void LoadLevel(int level)
     {
         Paused = false;
         Started = false;
+        Lost = false;
+        Won = false;
+        GameEventsManager.Instance.Paused = Paused;
         var levelModel = AssetsManager.GetLevelModel(level);
         if (levelModel != null)
         {
@@ -33,6 +44,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             LevelTime = levelModel.LevelTime;
             LevelRemainingTime = levelModel.LevelTime;
             TimerName = nameof(Level) + Level;
+            Timer.RemoveTimer(TimerName);
             foreach (Container container in levelModel.containers)
             {
                 AddContainer(container);
@@ -40,6 +52,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             Initialized = true;
         }
     }
+
     public IContainer AddContainer(Container container)
     {
         IContainer newContainer = PrefabsInstanciatorFactory.InitializeNew(container, transform);
@@ -52,16 +65,18 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
     }
     public void ResetLevel()
     {
-        Initialized = false;
-        Started = false;
-        Paused = false;
-        GameEventsManager.Instance.Paused = Paused;
         Timer.RemoveTimer(TimerName);
         while (containers.Count > 0)
         {
             containers[0].RemoveContainer();
         }
         LoadLevel(Level);
+    }
+    public void LoadNextLevel()
+    {
+        progress = GameProgress.LoadProgress();
+        Level = progress.CurrentLevel;
+        ResetLevel();
     }
 
     public void StartLevel()
@@ -78,6 +93,14 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
         }
     }
 
+    public void ResetAllProgress()
+    {
+        Level = 0;
+        progress.CurrentLevel = 0;
+        progress.SaveProgress();
+        ResetLevel();
+    }
+
     public void EndLevel()
     {
         if(Initialized && Started)
@@ -88,6 +111,7 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
             Paused = false;
             Initialized = false;
             GameEventsManager.Instance.Paused = Paused;
+            progress.SaveProgress();
         }
     }
 
@@ -97,6 +121,12 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
         Paused = pause;
         GameEventsManager.Instance.Paused = Paused;
     }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
     public void Update()
     {
         if (Initialized && !Started && GameEventsManager.Instance.SlotSelected)
@@ -116,8 +146,17 @@ public class LevelPlayManager : MonoBehaviour, ILevelManager
                     empty = false;
             }
 
-            if (LevelRemainingTime <= 0 || empty)
+            if (LevelRemainingTime <= 0)
             {
+                Lost = true;
+                Won = false;
+                EndLevel();
+            }
+            if (empty)
+            {
+                Lost = false;
+                Won = true;
+                progress.CurrentLevel = AssetsManager.GetNextLevel(Level);
                 EndLevel();
             }
         }

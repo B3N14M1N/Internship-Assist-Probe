@@ -30,6 +30,7 @@ namespace GameItemHolders
         int MaxSlots { get; }
         ISlot[] Slots { get; set; }
         bool IsEmpty { get; }
+        bool IsFull { get; }
         bool IsCombinable { get; }
         void RemoveLayer();
         void ClearLayer(bool removeSlots = true);

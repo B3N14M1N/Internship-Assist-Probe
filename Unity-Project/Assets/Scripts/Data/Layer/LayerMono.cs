@@ -91,6 +91,21 @@ public class LayerMono : MonoBehaviour, ILayer
             return true;
         }
     }
+    public bool IsFull 
+    {
+        get
+        {
+            if (slots == null)
+                return true;
+            foreach (var slot in slots)
+            {
+                if (slot != null && slot.ItemId == 0)
+                    return false;
+            }
+            return true;
+        }
+    }
+
     public bool IsCombinable
     {
         get
@@ -177,7 +192,7 @@ public class LayerMono : MonoBehaviour, ILayer
 
                 foreach (ISlot slot in Slots)
                 {
-                    slot?.SetStatus(true, true, 0, frontColor);
+                    slot?.SetStatus(true, true, -1, frontColor);
                 }
             }
             if ((status & LayerStatus.Back) != 0)
@@ -186,7 +201,7 @@ public class LayerMono : MonoBehaviour, ILayer
 
                 foreach (ISlot slot in Slots)
                 {
-                    slot?.SetStatus(true, false, -1, backColor);
+                    slot?.SetStatus(true, false, -2, backColor);
                 }
             }
         }

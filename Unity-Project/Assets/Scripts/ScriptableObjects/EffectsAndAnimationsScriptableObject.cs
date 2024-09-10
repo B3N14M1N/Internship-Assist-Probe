@@ -31,11 +31,11 @@ public class EffectsAndAnimationsScriptableObject : ScriptableObject
         // Get particles and set positions to match the Items on layer
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[layer.MaxSlots];
         int numParticlesAlive = particleSystem.GetParticles(particles, layer.MaxSlots);
-        Debug.Log(particles.Length);
+        //Debug.Log(particles.Length);
         for (int i = 0; i < particles.Length; i++)
         {
             particles[i].position = layer.Slots[i].SlotPosition;
-            Debug.Log(particles[i].position);
+            //Debug.Log(particles[i].position);
         }
 
         particleSystem.SetParticles(particles, particles.Length);

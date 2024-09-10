@@ -17,9 +17,8 @@ public class AssetsManager
     private static Dictionary<string, EffectsAndAnimationsScriptableObject> kvpEffects = new Dictionary<string, EffectsAndAnimationsScriptableObject>();
 
     [Inject]
-    public AssetsManager(string progressPath, string levelPaths, string ItemsPath, string PrefabsPath, string EffectsPath)
+    public AssetsManager(string levelPaths, string ItemsPath, string PrefabsPath, string EffectsPath)
     {
-        // read current progress
 
         foreach (LevelResourcePathScriptableObject resource in Resources.LoadAll<LevelResourcePathScriptableObject>(levelPaths).ToArray())
         {
@@ -52,9 +51,10 @@ public class AssetsManager
     {
         Debug.Log($"Saving Level {levelModel.level}");
         string json = JsonUtility.ToJson(levelModel, true);
-        string jsonPath = Application.dataPath + $"/Resources/Levels/Level{levelModel.level}.json";
-        File.WriteAllText(jsonPath, json);
+        string jsonPath = $"/Levels/Level{levelModel.level}.json";
+        File.WriteAllText(Application.streamingAssetsPath + jsonPath, json);
 
+#if UNITY_EDITOR
         LevelResourcePathScriptableObject sobj = ScriptableObject.CreateInstance<LevelResourcePathScriptableObject>();
         sobj.level = levelModel.level;
         sobj.path = jsonPath;
@@ -62,6 +62,7 @@ public class AssetsManager
         AssetDatabase.SaveAssets();
 
         kvpLevels.TryAdd(sobj.level, sobj);
+#endif
     }
 
     public static LevelModel GetLevelModel(int level)
@@ -70,8 +71,14 @@ public class AssetsManager
         {
             try
             {
-                string json = File.ReadAllText(kvpLevels[level].path);
-                return JsonUtility.FromJson<LevelModel>(json);
+                var fullPath = Application.streamingAssetsPath + path.path;
+                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(fullPath);
+                www.SendWebRequest();
+                while (!www.downloadHandler.isDone) {}
+
+                string jsonString = www.downloadHandler.text;
+                //Debug.Log(jsonString);
+                return JsonUtility.FromJson<LevelModel>(jsonString);
             }
             catch (Exception e)
             {
@@ -80,6 +87,14 @@ public class AssetsManager
         }
         Debug.Log($"Level {level} not found.");
         return null;
+    }
+    public static int GetNextLevel(int currentLevel)
+    {
+        if (kvpLevels.TryGetValue(currentLevel+1, out var path))
+        {
+            return currentLevel + 1;
+        }
+        return currentLevel;
     }
 
     public static GameItemData GetGameItemData(int gameItemId)
