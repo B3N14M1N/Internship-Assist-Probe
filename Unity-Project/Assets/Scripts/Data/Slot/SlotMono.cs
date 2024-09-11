@@ -83,8 +83,6 @@ public class SlotMono : MonoBehaviour, ISlot
     #region Methods
     private int previousRenderOrder;
     private Vector3 offset;
-    private int previousLayer;
-    private Vector3 previousScale;
     private Vector3 DragPosition()
     {
         var mousePos = Input.mousePosition;
@@ -93,26 +91,24 @@ public class SlotMono : MonoBehaviour, ISlot
     }
     private void OnMouseDown()
     {
-        bool ok = GameEventsManager.Instance != null ?
-            !GameEventsManager.Instance.SlotSelected && !GameEventsManager.Instance.Paused
-            : false;
-        if (ItemId != 0 && ok)
+        if (ItemId != 0
+            && GameEventsManager.Instance != null
+            && !GameEventsManager.Instance.SlotSelected
+            && !GameEventsManager.Instance.Paused)
         {
             offset = transform.position - DragPosition();
             previousRenderOrder = RenderOrder;
-            RenderOrder = 3001;
-            previousLayer = spriteRenderer.gameObject.layer;
-            spriteRenderer.gameObject.layer = 6; // TOP LAYER RENDER
-            previousScale = transform.localScale;
-            transform.localScale = previousScale * 1.2f;
+            RenderOrder = 1;
             GameEventsManager.Instance?.SelectedSlot(this);
         }
     }
 
     private void OnMouseDrag()
     {
-        bool ok = GameEventsManager.Instance != null ? !GameEventsManager.Instance.Paused: false;
-        if (ItemId != 0 && ok)
+        if (ItemId != 0
+            && GameEventsManager.Instance != null
+            && GameEventsManager.Instance.SelectedSlot(this, true)
+            && !GameEventsManager.Instance.Paused)
         {
             transform.position = DragPosition() + offset;
         }
@@ -120,18 +116,18 @@ public class SlotMono : MonoBehaviour, ISlot
 
     private void OnMouseUp()
     {
-        bool ok = GameEventsManager.Instance != null ? !GameEventsManager.Instance.Paused : false;
-        if (ItemId != 0)// && ok)
+        if (ItemId != 0
+            && GameEventsManager.Instance != null
+            && GameEventsManager.Instance.SelectedSlot(this, true))
         {
-            slotCollider.enabled = false;
+            RenderOrder = previousRenderOrder;
 
+            slotCollider.enabled = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
             slotCollider.enabled = true;
-            RenderOrder = previousRenderOrder;
-            spriteRenderer.gameObject.layer = previousLayer;
-            transform.localScale = previousScale;
-            if (hit.collider != null)
+
+            if (!GameEventsManager.Instance.Paused && hit.collider != null)
             {
                 ISlot hitSlot = hit.collider.GetComponent<ISlot>();
                 if (hitSlot?.ItemId == 0)
@@ -142,15 +138,8 @@ public class SlotMono : MonoBehaviour, ISlot
                 }
             }
 
-
-            // if instant return wanted uncomment this section
-            /*
-            GameEventsManager.Instance?.UnselectedSlot(null);
-            transform.localPosition = this.SlotPosition;
-            */
-            // and comment this section
-            if (this != null)
-                GameEventsManager.Instance?.UnselectedSlot(this);
+            if (this != null && GameEventsManager.Instance != null)
+                GameEventsManager.Instance.UnselectedSlot(this);
         }
     }
     #endregion

@@ -8,7 +8,6 @@ public class LevelBuilderManagerEditor : Editor
     public override void OnInspectorGUI()
     {
         LevelBuilderManager t = (LevelBuilderManager)target;
-        //DrawDefaultInspector();
 
         t.Level = EditorGUILayout.IntField("Level: ", t.Level);
         t.LevelTime = EditorGUILayout.FloatField("Level Solve Time: ", t.LevelTime);

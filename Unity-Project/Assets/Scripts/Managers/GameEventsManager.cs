@@ -22,17 +22,29 @@ public class GameEventsManager : MonoBehaviour
 
     public bool SlotSelected { get; private set; }
 
+    private ISlot slotSelected { get; set; }
+
     public bool Paused { get; set; }
 
-    public bool SelectedSlot(ISlot slot)
+    public bool SelectedSlot(ISlot slot, bool check = false)
     {
-        SlotSelected = true;
+        if (!check)
+        {
+            SlotSelected = true;
+            slotSelected = slot;
+            (slot as MonoBehaviour).GetComponentInChildren<Animation>().Play("Grab");
+        }
+        else
+        {
+            return slotSelected == slot;
+        }
         return true;
     }
 
     public bool UnselectedSlot(ISlot slot)
     {
-        if (slot != null)
+
+        if (slot != null && (slot as MonoBehaviour).isActiveAndEnabled)
             (slot as MonoBehaviour).StartCoroutine(ReturnBack(slot));
         SlotSelected = false;
         return true;
@@ -47,14 +59,18 @@ public class GameEventsManager : MonoBehaviour
                 gameObject.localPosition = Vector3.MoveTowards(gameObject.localPosition, slot.SlotPosition, ItemReturnSpeed * Time.deltaTime);
                 yield return null;
             }
+            (slot as MonoBehaviour).GetComponentInChildren<Animation>().Play("Drop");
         }
     }
 
 
-    public void ChangedSlots(ISlot from, ISlot to)
+    public void ChangedSlots(ISlot to, ISlot from)
     {
         if (to != null)
+        {
             CheckContainer((to as MonoBehaviour).GetComponentInParent<IContainer>(true));
+            (to as MonoBehaviour).GetComponentInChildren<Animation>().Play("Drop");
+        }
         if (from != null)
             CheckContainer((from as MonoBehaviour).GetComponentInParent<IContainer>(true));
     }
