@@ -1,11 +1,13 @@
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
+[RequireComponent(typeof(GameEventsManager))]
 public class LevelDataDisplayManager : MonoBehaviour
 {
+    #region Fields
+
     private float previousTime;
     [Inject]
     private LevelPlayManager levelManager;
@@ -23,6 +25,10 @@ public class LevelDataDisplayManager : MonoBehaviour
 
     public GameObject gameUnpauseButton;
     public GameObject gameNextLevelButton;
+    #endregion
+
+    #region Methods
+
     public void Awake()
     {
         Debug.Log(levelManager == null ? "Null" : "Injected");
@@ -41,17 +47,19 @@ public class LevelDataDisplayManager : MonoBehaviour
             TMP_Timer.GetComponent<Animation>().Play("Pulse Animation");
         }
         TMP_Timer.color = (time <= 30) ? lostTitleColor : pauseTitleColor;
-        TMP_Combo.text = levelManager.Combo > 0 ? $"Combo x{levelManager.Combo}" : "";
-        TMP_Stars.text = "" + levelManager.Stars;
 
-        if (levelManager.Paused)
+        TMP_Combo.text = GameEventsManager.Instance.Combo > 0 ? $"Combo x{GameEventsManager.Instance.Combo}" : "";
+        comboSloder.value = levelManager.ComboNormalized;
+
+        TMP_Stars.text = "" + GameEventsManager.Instance.Stars;
+        if (GameEventsManager.Instance.Paused)
         {
             TMP_Menu.text = "Game Paused";
             TMP_Menu.color = pauseTitleColor;
             gameUnpauseButton.SetActive(true);
             gameNextLevelButton.SetActive(false);
         }
-        if (levelManager.Won)
+        if (GameEventsManager.Instance.Won)
         {
             menu.SetActive(true);
             TMP_Menu.text = "Level Completed";
@@ -59,7 +67,7 @@ public class LevelDataDisplayManager : MonoBehaviour
             gameUnpauseButton.SetActive(false);
             gameNextLevelButton.SetActive(true);
         }
-        if (levelManager.Lost)
+        if (GameEventsManager.Instance.Lost)
         {
             menu.SetActive(true);
             TMP_Menu.text = "Game Lost";
@@ -69,4 +77,5 @@ public class LevelDataDisplayManager : MonoBehaviour
         }
         previousTime = levelManager.LevelRemainingTime;
     }
+    #endregion
 }

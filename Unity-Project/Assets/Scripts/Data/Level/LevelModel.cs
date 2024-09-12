@@ -7,22 +7,22 @@ using GameItemHolders;
 [Serializable]
 public class LevelModel
 {
-    public int level;
+    public int Level;
     public float LevelTime;
-    public List<Container> containers;
+    public List<Container> Containers;
 
-    public static LevelModel ToModel(List<IContainer> containersMono, int level, float LevelTime)
+    public static LevelModel ToModel(List<IContainer> containersMono, int level, float levelTime)
     {
         Debug.Log("Converting Level to LevelModel");
         var model = new LevelModel();
 
-        model.level = level;
-        model.LevelTime = LevelTime;
+        model.Level = level;
+        model.LevelTime = levelTime;
 
-        model.containers = new List<Container>();
+        model.Containers = new List<Container>();
         foreach (var container in containersMono)
         {
-            model.containers.Add(container.Container);
+            model.Containers.Add(container.Container);
         }
         return model;
     }

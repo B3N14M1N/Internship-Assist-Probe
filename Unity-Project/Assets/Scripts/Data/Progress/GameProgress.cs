@@ -7,6 +7,12 @@ public class GameProgress
     public int CurrentLevel;
 
     private const string Path = "/Progress.josn";
+
+
+    /// <summary>
+    /// Saves the current progress.
+    /// better to not save as json *_*
+    /// </summary>
     public void SaveProgress()
     {
         string json = JsonUtility.ToJson(this, true);
@@ -14,6 +20,9 @@ public class GameProgress
         File.WriteAllText(jsonPath, json);
     }
 
+    /// <summary>
+    /// Load the progress if it exists
+    /// </summary>
     public static GameProgress LoadProgress()
     {
         try

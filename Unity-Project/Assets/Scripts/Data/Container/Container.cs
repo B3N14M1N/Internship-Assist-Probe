@@ -15,15 +15,20 @@ namespace GameItemHolders
 
     public interface IContainer
     {
+        #region Fields
         List<ILayer> Layers { get; set; }
         Container Container { get; set; }
 
         bool IsEmpty { get; }
         bool IsFull { get; }
+        #endregion
+
+        #region Methods
         void RemoveContainer();
         void ClearContainer(bool keepTopLayer = false, bool clearOnlyEmpty = false);
         ILayer AddLayer(Layer layer = null);
         void RemoveLayer(ILayer layer = null);
-        void RearangeLayers(bool putEmptyLayersBehind = false);
+        void RearrangeLayers(bool putEmptyLayersBehind = false);
+        #endregion
     }
 }

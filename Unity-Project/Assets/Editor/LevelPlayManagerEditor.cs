@@ -15,38 +15,11 @@ public class LevelPlayManagerEditor : Editor
         EditorGUIUtility.labelWidth = 100.0f;
         EditorGUILayout.IntField("Level: ", t.Level);
         EditorGUILayout.FloatField("Starting Time", t.LevelTime);
-        if(EditorGUILayout.Toggle("Initialized: ", t.Initialized))
-        {
-            EditorGUILayout.Toggle("Started: ", t.Started);
-            EditorGUILayout.Toggle("Paused: ", t.Paused);
-        }
         GUI.enabled = true;
+        EditorGUILayout.Space(5);
         EditorGUIUtility.labelWidth = 0;
+        var newComboTime = EditorGUILayout.FloatField("Max Combo Time: ", t.MaxComboTime);
+        t.MaxComboTime = newComboTime >= 0 ? newComboTime : 30;
 
-        EditorGUILayout.Space(5);
-        if (Application.isEditor && !Application.isPlaying)
-            GUI.enabled = false;
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Start Game"))
-        {
-            t.StartLevel();
-        }
-        if (GUILayout.Button("Pause Game"))
-        {
-            t.PauseLevel(!t.Paused);
-        }
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.Space(5);
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("End Game"))
-        {
-            t.EndLevel();
-        }
-        if (GUILayout.Button("Restart Game"))
-        {
-            t.ResetLevel();
-        }
-        EditorGUILayout.EndHorizontal();
-        GUI.enabled = true;
     }
 }

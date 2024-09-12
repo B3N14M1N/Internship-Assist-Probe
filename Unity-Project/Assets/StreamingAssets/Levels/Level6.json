@@ -1,14 +1,42 @@
 {
-    "Level": 4,
-    "LevelTime": 300.0,
+    "Level": 6,
+    "LevelTime": 360.0,
     "Containers": [
         {
             "Position": {
                 "x": -18.0,
-                "y": 20.0,
+                "y": 7.699999809265137,
                 "z": 0.0
             },
             "Layers": [
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 3
+                        },
+                        {
+                            "gameItemId": 12
+                        },
+                        {
+                            "gameItemId": 3
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 18
+                        },
+                        {
+                            "gameItemId": 18
+                        },
+                        {
+                            "gameItemId": 15
+                        }
+                    ]
+                },
                 {
                     "MaxSlots": 3,
                     "Slots": [
@@ -19,7 +47,21 @@
                             "gameItemId": 0
                         },
                         {
+                            "gameItemId": 8
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 13
+                        },
+                        {
                             "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 12
                         }
                     ]
                 },
@@ -34,6 +76,136 @@
                         },
                         {
                             "gameItemId": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": -18.0,
+                "y": -7.5,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 19
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 13
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 8
+                        },
+                        {
+                            "gameItemId": 8
+                        },
+                        {
+                            "gameItemId": 11
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 12
+                        },
+                        {
+                            "gameItemId": 5
+                        },
+                        {
+                            "gameItemId": 5
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 4
+                        },
+                        {
+                            "gameItemId": 11
+                        },
+                        {
+                            "gameItemId": 11
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 10
+                        },
+                        {
+                            "gameItemId": 16
+                        },
+                        {
+                            "gameItemId": 17
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 4
+                        },
+                        {
+                            "gameItemId": 1
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 19
+                        },
+                        {
+                            "gameItemId": 19
                         }
                     ]
                 },
@@ -69,8 +241,8 @@
         },
         {
             "Position": {
-                "x": -18.0,
-                "y": 10.0,
+                "x": 0.0,
+                "y": -15.0,
                 "z": 0.0
             },
             "Layers": [
@@ -78,13 +250,13 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 0
+                            "gameItemId": 20
                         },
                         {
-                            "gameItemId": 3
+                            "gameItemId": 16
                         },
                         {
-                            "gameItemId": 0
+                            "gameItemId": 20
                         }
                     ]
                 },
@@ -92,13 +264,13 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 5
+                            "gameItemId": 6
                         },
                         {
-                            "gameItemId": 0
+                            "gameItemId": 2
                         },
                         {
-                            "gameItemId": 0
+                            "gameItemId": 2
                         }
                     ]
                 },
@@ -120,64 +292,13 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 0
+                            "gameItemId": 1
+                        },
+                        {
+                            "gameItemId": 15
                         },
                         {
                             "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": -18.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 7
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 8
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 11
-                        },
-                        {
-                            "gameItemId": 4
-                        },
-                        {
-                            "gameItemId": 4
                         }
                     ]
                 },
@@ -199,8 +320,8 @@
         },
         {
             "Position": {
-                "x": -18.0,
-                "y": -10.0,
+                "x": 18.0,
+                "y": 7.5,
                 "z": 0.0
             },
             "Layers": [
@@ -208,13 +329,41 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
+                            "gameItemId": 4
+                        },
+                        {
                             "gameItemId": 0
                         },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 17
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 17
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
                         {
                             "gameItemId": 20
                         },
                         {
                             "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 13
                         }
                     ]
                 },
@@ -222,7 +371,72 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 18
+                            "gameItemId": 2
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 15
+                        },
+                        {
+                            "gameItemId": 3
+                        },
+                        {
+                            "gameItemId": 7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Position": {
+                "x": 18.0,
+                "y": -7.5,
+                "z": 0.0
+            },
+            "Layers": [
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 9
+                        },
+                        {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 0
+                        },
+                        {
+                            "gameItemId": 9
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 0
                         },
                         {
                             "gameItemId": 0
@@ -273,298 +487,10 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 3
-                        },
-                        {
-                            "gameItemId": 7
-                        },
-                        {
-                            "gameItemId": 4
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 0.0,
-                "y": 5.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 15
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 19
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
                             "gameItemId": 6
                         },
                         {
-                            "gameItemId": 2
-                        },
-                        {
-                            "gameItemId": 10
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 0.0,
-                "y": -5.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 1
-                        },
-                        {
-                            "gameItemId": 15
-                        },
-                        {
-                            "gameItemId": 18
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 18.0,
-                "y": 20.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 5
-                        },
-                        {
-                            "gameItemId": 5
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 20
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 1
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 17
-                        },
-                        {
-                            "gameItemId": 18
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 18.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 15
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
                             "gameItemId": 9
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 20
                         },
                         {
                             "gameItemId": 14
@@ -575,166 +501,13 @@
                     "MaxSlots": 3,
                     "Slots": [
                         {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 19
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 18.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 12
-                        },
-                        {
-                            "gameItemId": 13
-                        },
-                        {
-                            "gameItemId": 8
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 13
-                        },
-                        {
-                            "gameItemId": 10
-                        },
-                        {
-                            "gameItemId": 10
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 17
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 16
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
+                            "gameItemId": 18
                         },
                         {
                             "gameItemId": 0
                         },
                         {
                             "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 18.0,
-                "y": -10.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 8
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 11
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 16
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": -18.0,
-                "y": -20.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 12
-                        },
-                        {
-                            "gameItemId": 12
                         }
                     ]
                 },
@@ -745,10 +518,10 @@
                             "gameItemId": 7
                         },
                         {
-                            "gameItemId": 6
+                            "gameItemId": 5
                         },
                         {
-                            "gameItemId": 9
+                            "gameItemId": 7
                         }
                     ]
                 },
@@ -762,109 +535,21 @@
                             "gameItemId": 16
                         },
                         {
+                            "gameItemId": 0
+                        }
+                    ]
+                },
+                {
+                    "MaxSlots": 3,
+                    "Slots": [
+                        {
+                            "gameItemId": 10
+                        },
+                        {
                             "gameItemId": 14
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 0.0,
-                "y": -15.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 1
                         },
                         {
-                            "gameItemId": 2
-                        },
-                        {
-                            "gameItemId": 13
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 17
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Position": {
-                "x": 18.0,
-                "y": -20.0,
-                "z": 0.0
-            },
-            "Layers": [
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 9
-                        },
-                        {
-                            "gameItemId": 0
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 3
-                        },
-                        {
-                            "gameItemId": 11
-                        },
-                        {
-                            "gameItemId": 2
-                        }
-                    ]
-                },
-                {
-                    "MaxSlots": 3,
-                    "Slots": [
-                        {
-                            "gameItemId": 0
-                        },
-                        {
-                            "gameItemId": 19
-                        },
-                        {
-                            "gameItemId": 0
+                            "gameItemId": 10
                         }
                     ]
                 }

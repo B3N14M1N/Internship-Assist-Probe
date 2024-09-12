@@ -1,7 +1,7 @@
 {
-    "level": 0,
+    "Level": 0,
     "LevelTime": 60.0,
-    "containers": [
+    "Containers": [
         {
             "Position": {
                 "x": -15.0,
@@ -10,7 +10,6 @@
             },
             "Layers": [
                 {
-                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -25,7 +24,6 @@
                     ]
                 },
                 {
-                    "Status": 2,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -40,7 +38,6 @@
                     ]
                 },
                 {
-                    "Status": 4,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -64,7 +61,6 @@
             },
             "Layers": [
                 {
-                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -79,7 +75,6 @@
                     ]
                 },
                 {
-                    "Status": 2,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -94,7 +89,6 @@
                     ]
                 },
                 {
-                    "Status": 4,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -118,7 +112,6 @@
             },
             "Layers": [
                 {
-                    "Status": 1,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -133,7 +126,6 @@
                     ]
                 },
                 {
-                    "Status": 2,
                     "MaxSlots": 3,
                     "Slots": [
                         {
@@ -148,7 +140,6 @@
                     ]
                 },
                 {
-                    "Status": 4,
                     "MaxSlots": 3,
                     "Slots": [
                         {

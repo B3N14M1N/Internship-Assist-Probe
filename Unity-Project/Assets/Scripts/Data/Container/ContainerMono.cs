@@ -4,15 +4,20 @@ using UnityEngine;
 
 using GameItemHolders;
 
-    [Serializable]
+[Serializable]
 public class ContainerMono : MonoBehaviour, IContainer
 {
     #region FIELDS
     public List<ILayer> Layers { get; set; }
+
+    /// <summary>
+    /// Gets/sets the component data from/to a data class for saving/loading
+    /// </summary>
     public Container Container
     {
         get
         {
+            // Returns a pure data class for saving the Container data
             var container = new Container()
             {
                 Position = transform.localPosition,
@@ -25,6 +30,8 @@ public class ContainerMono : MonoBehaviour, IContainer
             }
             return container;
         }
+        // loads the data from a Container class to this monobehaviour
+        // clear the previous data and instantiates the components (Layers, Slots)
         set
         {
             value ??= Container.Empty;
@@ -35,10 +42,13 @@ public class ContainerMono : MonoBehaviour, IContainer
                 ILayer layerMono = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
                 Layers.Add(layerMono);
             }
-            RearangeLayers(true);
+            RearrangeLayers(true);
         }
     }
 
+    /// <summary>
+    /// Returns true if all layers are empty or the container doesn't contain any layers
+    /// </summary>
     public bool IsEmpty
     {
         get
@@ -53,6 +63,10 @@ public class ContainerMono : MonoBehaviour, IContainer
             return true;
         }
     }
+
+    /// <summary>
+    /// Returns true if there is not even a single slot empty 
+    /// </summary>
     public bool IsFull
     {
         get
@@ -71,6 +85,13 @@ public class ContainerMono : MonoBehaviour, IContainer
 
 
     #region CLEAR & REMOVE CONTAINER
+
+
+    /// <summary>
+    /// Clears the container based on different settings
+    /// </summary>
+    /// <param name="keepTopLayer">Keeps at least one layer (the first one in the list)</param>
+    /// <param name="clearOnlyEmpty">Keeps only the layers that are not empty</param>
     public void ClearContainer(bool keepTopLayer = false, bool clearOnlyEmpty = false)
     {
         if (Layers != null)
@@ -87,6 +108,11 @@ public class ContainerMono : MonoBehaviour, IContainer
         }
     }
 
+    /// <summary>
+    /// Remove this container, clears all layers and slots 
+    /// and if a manager has a reference to this, removes it
+    /// then destroys this
+    /// </summary>
     public void RemoveContainer()
     {
         ClearContainer();
@@ -99,19 +125,28 @@ public class ContainerMono : MonoBehaviour, IContainer
 
     #region ADD & REARANGE & REMOVE LAYERS
 
-
+    /// <summary>
+    /// Adds a layer in the back to this container.
+    /// Sets the status based on the Position in the layer
+    /// </summary>
+    /// <param name="layer">If this is null adds a new empty layer</param>
+    /// <returns></returns>
     public ILayer AddLayer(Layer layer = null)
     {
         layer ??= new Layer(); 
         var newLayer = PrefabsInstanciatorFactory.InitializeNew(layer, transform);
         (newLayer as MonoBehaviour).name = $"Layer {Layers.Count}";
-        newLayer.SetStatus(LayerStatus.Hidden);
+        newLayer.SetStatus(Layers.Count == 0 ? LayerStatus.Front : Layers.Count == 1 ? LayerStatus.Back : LayerStatus.Hidden);
         Layers.Add(newLayer);
 
         return newLayer;
     }
 
-    public void RearangeLayers(bool putEmptyLayersBehind = false)
+    /// <summary>
+    /// Rearanges the layers in the list, updating the status and names for each layer
+    /// </summary>
+    /// <param name="putEmptyLayersBehind">If true, the empty layers are put in the back (end of list)</param>
+    public void RearrangeLayers(bool putEmptyLayersBehind = false)
     {
         if (putEmptyLayersBehind)
         {
@@ -144,6 +179,10 @@ public class ContainerMono : MonoBehaviour, IContainer
         }
     }
 
+    /// <summary>
+    /// Removes a referenced layer from the list
+    /// </summary>
+    /// <param name="layer"></param>
     public void RemoveLayer(ILayer layer)
     {
         var index = Layers.IndexOf(layer);

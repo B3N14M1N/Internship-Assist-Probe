@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BananaPancake
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 2
-    sprite: {fileID: 21300000, guid: 0491533c9fb615346ad9c4cc46834fab, type: 3}
-    position: {x: 0, y: 0, z: 0}
-    scale: {x: 0.8, y: 0.75, z: 0.75}
+    GameItemId: 2
+    Sprite: {fileID: 21300000, guid: 0491533c9fb615346ad9c4cc46834fab, type: 3}
+    Position: {x: 0, y: 0, z: 0}
+    Scale: {x: 0.8, y: 0.75, z: 1}

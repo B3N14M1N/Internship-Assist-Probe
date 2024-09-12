@@ -15,7 +15,6 @@ namespace GameItemHolders
     [Serializable]
     public class Layer
     {
-        public LayerStatus Status;
         public int MaxSlots;
         public Slot[] Slots;
 
@@ -24,16 +23,22 @@ namespace GameItemHolders
 
     public interface ILayer
     {
-        void SetStatus(LayerStatus status);
+        #region Fields
         Layer Layer { get; set; }
-        LayerStatus Status { get; set; }
-        int MaxSlots { get; }
         ISlot[] Slots { get; set; }
+        LayerStatus Status { get;}
+
+        int MaxSlots { get; }
         bool IsEmpty { get; }
         bool IsFull { get; }
         bool IsCombinable { get; }
+        #endregion
+
+        #region Methods
         void RemoveLayer();
         void ClearLayer(bool removeSlots = true);
+        void SetStatus(LayerStatus status);
         void RemoveSlot(ISlot slot);
+        #endregion
     }
 }

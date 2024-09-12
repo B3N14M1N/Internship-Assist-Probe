@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueBerryFrenchToast
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 5
-    sprite: {fileID: 21300000, guid: 54cf2715bfbee00448c53d3b5c934fbf, type: 3}
-    position: {x: 0, y: -0.3, z: 0}
-    scale: {x: 0.8, y: 0.8, z: 0.8}
+    GameItemId: 5
+    Sprite: {fileID: 21300000, guid: 54cf2715bfbee00448c53d3b5c934fbf, type: 3}
+    Position: {x: 0, y: -0.3, z: 0}
+    Scale: {x: 0.8, y: 0.8, z: 1}

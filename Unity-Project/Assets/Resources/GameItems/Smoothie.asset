@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Smoothie
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 20
-    sprite: {fileID: 21300000, guid: 89033818ffe2eb54793eeff2ad0e20ad, type: 3}
-    position: {x: 0, y: 0.3, z: 0}
-    scale: {x: 1, y: 0.8, z: 1}
+    GameItemId: 20
+    Sprite: {fileID: 21300000, guid: 89033818ffe2eb54793eeff2ad0e20ad, type: 3}
+    Position: {x: 0, y: 0.3, z: 0}
+    Scale: {x: 1, y: 0.8, z: 1}

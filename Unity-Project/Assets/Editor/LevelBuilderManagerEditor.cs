@@ -35,15 +35,14 @@ public class LevelBuilderManagerEditor : Editor
         t.Difficulty = (LevelDifficultyMode)EditorGUILayout.EnumPopup("Level Difficulty:", t.Difficulty);
         var newitems = EditorGUILayout.IntField("Number of items: ", t.NumberOfItems);
         t.NumberOfItems = newitems > 0 ? newitems : t.NumberOfItems;
-        t.Seed = EditorGUILayout.IntField("Seed: ", t.Seed);
         EditorGUILayout.Space(5);
 
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Populate containers"))
+        if (GUILayout.Button("Populate Containers"))
         {
             t.PopulateContainers();
         }
-        if (GUILayout.Button("Clear containers"))
+        if (GUILayout.Button("Clear Containers"))
         {
             t.ClearAllItems();
         }

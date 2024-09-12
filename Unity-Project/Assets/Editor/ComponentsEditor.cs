@@ -108,7 +108,7 @@ public class ContainerMonoEditor : Editor
         }
         if (GUILayout.Button("Rearange Layers"))
         {
-            t.RearangeLayers(true);
+            t.RearrangeLayers(true);
         }
         EditorGUILayout.EndHorizontal();
         if (GUILayout.Button("Remove Container"))

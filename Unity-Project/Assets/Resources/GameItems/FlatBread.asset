@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlatBread
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 10
-    sprite: {fileID: 21300000, guid: ec4b3ef46b2cd7641bdc481a82374568, type: 3}
-    position: {x: 0, y: -0.6, z: 0}
-    scale: {x: 0.8, y: 0.8, z: 0.8}
+    GameItemId: 10
+    Sprite: {fileID: 21300000, guid: ec4b3ef46b2cd7641bdc481a82374568, type: 3}
+    Position: {x: 0, y: -0.6, z: 0}
+    Scale: {x: 0.8, y: 0.8, z: 1}

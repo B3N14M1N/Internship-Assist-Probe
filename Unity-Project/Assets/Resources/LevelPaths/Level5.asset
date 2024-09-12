@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7cba35825a59704cb116eb70c42ff6c, type: 3}
-  m_Name: PlainPorridge
+  m_Script: {fileID: 11500000, guid: e82c7d4639634734b8cace5184567eff, type: 3}
+  m_Name: Level5
   m_EditorClassIdentifier: 
-  item:
-    GameItemId: 18
-    Sprite: {fileID: 21300000, guid: 7e30c4466a79cfe48aeb78a2d88a5b80, type: 3}
-    Position: {x: 0, y: 0, z: 0}
-    Scale: {x: 1, y: 1, z: 1}
+  level: 5
+  path: /Levels/Level5.json

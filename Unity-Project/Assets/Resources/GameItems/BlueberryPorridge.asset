@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueberryPorridge
   m_EditorClassIdentifier: 
   item:
-    gameItemId: 9
-    sprite: {fileID: 21300000, guid: 97ed2f3b1792dee4e9fc5ff0f7792141, type: 3}
-    position: {x: 0, y: 0, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    GameItemId: 9
+    Sprite: {fileID: 21300000, guid: 97ed2f3b1792dee4e9fc5ff0f7792141, type: 3}
+    Position: {x: 0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
